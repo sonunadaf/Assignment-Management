@@ -1,0 +1,78 @@
+.header-section {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	padding-top: 70px;
+}
+
+.header-background {
+	background-color: #171720;
+}
+
+.site-logo {
+	display: inline-block;
+	color: red;
+	-moz-force-broken-image-icon: inherit;
+}
+
+.link {
+	color: white;
+	padding: 60px 25px 0px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.main-menu ul {
+	list-style: none;
+}
+
+.main-menu ul li {
+	display: inline;
+}
+
+.main-menu ul li a {
+	display: inline-block;
+	font-size: 16px;
+	color: #fff;
+	margin-left: 45px;
+	font-weight: 600;
+	padding: 50px 0px 2px;
+}
+
+.main-menu ul li a:hover {
+	color: #d82a4e;
+}
+
+.widget-item {
+	width: 20%;
+	padding: 0 15px;
+}
+
+.widget-item ul.contact-list li {
+	margin-bottom: 27px;
+	position: relative;
+	padding-left: 10px;
+}
+
+.widget-item ul.contact-list li:last-child {
+	margin-bottom: 0;
+}
+
+.widget-item ul.contact-list li:after {
+	position: absolute;
+	content: "";
+	width: 8px;
+	height: 8px;
+	left: -5px;
+	top: 6px;
+	border-radius: 50%;
+	background: #d82a4e;
+}
+
+.middle-section {
+	height: 510px;
+	width: 100%;
+	background-color: rgb(231, 243, 245);
+}
