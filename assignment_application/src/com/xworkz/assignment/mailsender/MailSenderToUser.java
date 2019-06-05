@@ -25,6 +25,7 @@ public class MailSenderToUser {
 			mailMessage.setText("Password and user management");
 			System.out.println("MailSender implementation : " + mailSenderImpl);
 			mailSenderImpl.send(mailMessage);
+			
 		} catch (MailException e) {
 			e.printStackTrace();
 		}

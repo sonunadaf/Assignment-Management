@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.signup.SignUpDTO;
 import com.xworkz.assignment.exception.ControllerException;
 import com.xworkz.assignment.exception.ServiceException;
@@ -26,7 +27,7 @@ public class SignUpController {
 	@RequestMapping(value = "/adminSignUp", method = RequestMethod.GET)
 	public String onSignUp() {
 
-		return "/SignUp.jsp";
+		return EnumUtil.SignUp.toString();
 	}
 
 	@RequestMapping(value = "/adminSignUp", method = RequestMethod.POST)
@@ -40,6 +41,6 @@ public class SignUpController {
 			System.err.println("Exception from controller" + e.getMessage());
 			throw new ControllerException("Exception from controller " + e.getMessage());
 		}
-		return new ModelAndView("SignUp.jsp", "message", message);
+		return new ModelAndView("SignUp", "message", message);
 	}
 }
