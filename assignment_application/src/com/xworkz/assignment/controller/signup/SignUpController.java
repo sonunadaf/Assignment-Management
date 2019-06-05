@@ -41,6 +41,6 @@ public class SignUpController {
 			System.err.println("Exception from controller" + e.getMessage());
 			throw new ControllerException("Exception from controller " + e.getMessage());
 		}
-		return new ModelAndView("SignUp", "message", message);
+		return new ModelAndView("SignIn", "message", message);
 	}
 }

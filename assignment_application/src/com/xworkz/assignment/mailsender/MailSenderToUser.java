@@ -21,13 +21,15 @@ public class MailSenderToUser {
 			System.out.println("MailSender : " + mailSenderImpl);
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setTo(to);
-			mailMessage.setSubject("Password sending");
-			mailMessage.setText("Password and user management");
+			mailMessage.setSubject("Assignment Management");
+			mailMessage.setText("Welcome to Assignment Management \n" + "Your registration is sucessful \n"
+					+ "User Name : " + to + "\n Password : " + password);
 			System.out.println("MailSender implementation : " + mailSenderImpl);
 			mailSenderImpl.send(mailMessage);
-			
+
 		} catch (MailException e) {
 			e.printStackTrace();
+
 		}
 	}
 

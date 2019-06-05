@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.xworkz.assignment.dao.getadminentitybyemail.IGetAdminEntityByEmailDAO;
@@ -24,6 +25,9 @@ public class SignUpServiceImpl implements ISignUpService {
 
 	@Autowired
 	private MailSenderToUser mailSender;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public SignUpServiceImpl() {
 		System.out.println("created : " + this.getClass().getSimpleName());
@@ -47,17 +51,18 @@ public class SignUpServiceImpl implements ISignUpService {
 				isValid = false;
 				return "enter valid phone number";
 			}
+			String password = "12345";
 			if (isValid) {
 				AdminEntity adminEntity = new AdminEntity();
 				BeanUtils.copyProperties(signupDto, adminEntity);
 				adminEntity.setContactNumber(signupDto.getCountryCode() + signupDto.getPhoneNo());
 				adminEntity.setFirstLogin(true);
-				adminEntity.setPassword("123");
+				adminEntity.setPassword(passwordEncoder.encode(password));
 				adminEntity.setDate(new Date() + "");
 				System.out.println(adminEntity);
 				Integer id = iSignUpDAO.save(adminEntity);
 				if (id != null && id > 0) {
-					mailSender.sendMail(email, "123");
+					mailSender.sendMail(email, password);
 				}
 			}
 		} catch (DAOException e) {

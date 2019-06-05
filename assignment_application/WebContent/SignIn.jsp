@@ -13,15 +13,15 @@
 	<%@include file="Header.jsp"%>
 	<div class="container  middle-section">
 		<h5 align="center">Admin Sign In</h5>
-		<form action="adminLogin" method="post" name="a"
+		<form action="login" method="post"
 			onsubmit="return signInValidation()">
-			<div id="validate" style="color: red;"></div>
+			<div id="validate" style="color: red;">${message}</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 
 				<div class="col-md-5 mb-3">
 					<label for="userName">User Name</label> <input type="text"
-						class="form-control" id="userName" name="userName"
+						class="form-control" id="userName" name="user"
 						placeholder="User Name">
 					<div id="emailvalid" style="color: red;"></div>
 				</div>

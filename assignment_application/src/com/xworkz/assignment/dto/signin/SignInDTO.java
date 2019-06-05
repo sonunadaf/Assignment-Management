@@ -1,10 +1,7 @@
 package com.xworkz.assignment.dto.signin;
 
-import javax.validation.constraints.NotEmpty;
-
 public class SignInDTO {
 
-	@NotEmpty(message = "enter user name")
 	private String user;
 	private String password;
 

@@ -21,8 +21,8 @@ function signInValidation() {
 
 	var result = getMessage(username, userpassword);
 	if (result == false) {
-		document.getElementById('validate').innerHTML = 'incorrect user name or password';
-		return false;
+		// document.getElementById('validate').innerHTML = 'incorrect user name
+		// or password';
 	}
 
 }
