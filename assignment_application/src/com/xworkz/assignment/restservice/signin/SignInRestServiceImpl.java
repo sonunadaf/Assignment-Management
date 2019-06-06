@@ -10,6 +10,7 @@ import com.xworkz.assignment.exception.DAOException;
 
 @Service
 public class SignInRestServiceImpl implements ISignInRestService {
+
 	@Autowired
 	private IGetAdminEntityByEmailDAO getEntityByEmailDAO;
 

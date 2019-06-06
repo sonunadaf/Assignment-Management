@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.signin.SignInDTO;
+import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.service.signin.ISignInService;
 
 @Controller
@@ -29,12 +30,26 @@ public class SignInController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView signIn(SignInDTO signInDTO) {
 		if (signInDTO != null) {
-			boolean isexist = signInService.signIn(signInDTO);
-			if (isexist)
-				return new ModelAndView(EnumUtil.SignIn.toString(), "message", "Login successful");
+			AdminEntity getAdminFromDb = signInService.signIn(signInDTO);
+			if (getAdminFromDb != null) {
+				if (signInDTO.getPassword().equals(getAdminFromDb.getPassword())) {
+					if (getAdminFromDb.getFailLogin() < 3) {
+						signInService.updateFailLoginByZero(getAdminFromDb);
+						return new ModelAndView(EnumUtil.SignIn.toString(), "message", "Sign Successful");
+					} else {
+						return new ModelAndView(EnumUtil.SignIn.toString(), "message",
+								"You have have entered 3 time wrong password,  please contact Assignment Mannagement Customer Care");
+					}
+
+				} else {
+					signInService.updateFailLogin(getAdminFromDb);
+					return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user password");
+				}
+			} else {
+				return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user name");
+			}
+		} else {
+			return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user name");
 		}
-		return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user name or password");
-
 	}
-
 }

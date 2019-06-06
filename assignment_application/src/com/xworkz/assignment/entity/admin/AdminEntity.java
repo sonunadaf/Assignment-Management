@@ -39,8 +39,11 @@ public class AdminEntity implements Serializable {
 	@Column(name = "PASSWORD")
 	private String password;
 	@Column(name = "SIGN_UP_DATE")
-	// @Value(value=new Date()+"")
 	private String date;
+	@Column(name = "LAST_SIGN_IN")
+	private String lastLogin;
+	@Column(name = "FAIL_SIGN_IN")
+	private Integer failLogin;
 
 	public AdminEntity() {
 		System.out.println("created : " + this.getClass().getSimpleName());
@@ -116,6 +119,22 @@ public class AdminEntity implements Serializable {
 
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
+	}
+
+	public String getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public Integer getFailLogin() {
+		return failLogin;
+	}
+
+	public void setFailLogin(int failLogin) {
+		this.failLogin = failLogin;
 	}
 
 	@Override
