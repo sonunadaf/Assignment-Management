@@ -1,0 +1,74 @@
+.header-two-bars .header-limiter {
+	max-width: 1200px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+/* Logo */
+.header-two-bars img {
+	float: left;
+}
+
+.header-two-bars h1 span {
+	color: #bc40df;
+}
+
+/* The first bar */
+.header-two-bars .header-first-bar {
+	background-color: #292c2f;
+	box-shadow: 0 1px 1px #ccc;
+	padding: 20px 40px;
+	height: 120px;
+	color: #ffffff;
+	box-sizing: border-box;
+}
+
+.header-two-bars .header-first-bar a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.header-two-bars .header-first-bar nav {
+	font: 14px Arial, Helvetica, sans-serif;
+	line-height: 100px;
+	float: left;
+	margin: 0 0 0 60px;
+	padding: 0;
+}
+
+.header-two-bars .header-first-bar nav a {
+	display: inline-block;
+	padding: 0 5px;
+	opacity: 0.9;
+	text-decoration: none;
+	line-height: 1;
+}
+
+.header-two-bars .header-first-bar nav a:hover {
+	opacity: 1;
+}
+
+.header-two-bars .header-first-bar nav a.selected {
+	border-radius: 2px;
+	background-color: #2B5773;
+	padding: 8px 12px;
+}
+
+.header-two-bars .header-first-bar a.logout-button {
+	font-size: 13px;
+	font-weight: bold;
+	float: right;
+	border-radius: 3px;
+	background-color: rgba(58, 60, 62, 0);
+	height: 40px;
+	padding: 0 20px;
+	border: 1px solid #5E6367;
+	line-height: 40px;
+	box-sizing: border-box;
+}
+
+/* Second Bar */
+
+/*	Making the header responsive. Remove these styles, if
+	you don't need the header to work on mobile devices. */
+}

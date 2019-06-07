@@ -1,7 +1,11 @@
 package com.xworkz.assignment.controller.signin;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +33,7 @@ public class SignInController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView signIn(SignInDTO signInDTO) throws DAOException {
+	public ModelAndView signIn(SignInDTO signInDTO, HttpServletRequest request) throws DAOException {
 
 		System.out.println("invoked signin from controller " + signInDTO);
 		if (signInDTO != null) {
@@ -38,7 +42,16 @@ public class SignInController {
 				if (signInDTO.getPassword().equals(getAdminFromDb.getPassword())) {
 					if (getAdminFromDb.getFailLogin() < 3) {
 						signInService.updateFailLoginByZero(getAdminFromDb);
-						return new ModelAndView(EnumUtil.SignIn.toString(), "message", "Sign Successful");
+						HttpSession session = request.getSession(true);
+						//session.setMaxInactiveInterval(60);
+						// session.invalidate();
+						session.setAttribute("admin", getAdminFromDb);
+						if (getAdminFromDb.isFirstLogin()) {
+							return new ModelAndView(EnumUtil.ChangePassword.toString(), "message", "Sign Successful");
+						} else {
+							// implementation is incomplete
+							return new ModelAndView(EnumUtil.AdminHome.toString());
+						}
 					} else {
 						return new ModelAndView(EnumUtil.SignIn.toString(), "message",
 								"You have have entered 3 time wrong password,  please contact Assignment Mannagement Customer Care");

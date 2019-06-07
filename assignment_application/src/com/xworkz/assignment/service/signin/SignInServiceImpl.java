@@ -1,5 +1,7 @@
 package com.xworkz.assignment.service.signin;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -64,9 +66,11 @@ public class SignInServiceImpl implements ISignInService {
 	@Override
 	public void updateFailLoginByZero(AdminEntity getAdminFromDb) throws DAOException {
 		AdminEntity adminEntity = adminDAO.getEntityByEmail(getAdminFromDb.getEmailId());
-		// getAdminFromDb.setPassword(passwordEncoder.encode(getAdminFromDb.getPassword()));
+		if (adminEntity != null) {
+			adminEntity.setFailLogin(0);
+			adminEntity.setLastLogin(new Date() + "");
+		}
 		signInDAO.updateFailLoginByZero(adminEntity);
-
 	}
 
 }

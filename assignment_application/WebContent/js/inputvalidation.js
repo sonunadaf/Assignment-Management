@@ -65,9 +65,6 @@ function changePasswordValidation() {
 	if (oldPass.length == 0) {
 		document.getElementById('oldPass').innerHTML = 'Enter Old Password';
 		return false;
-	} else if (oldPass.length < 8) {
-		document.getElementById('oldPass').innerHTML = 'Password Length must be 8 or above';
-		return false;
 	} else {
 		document.getElementById('oldPass').innerHTML = '';
 	}
@@ -76,26 +73,69 @@ function changePasswordValidation() {
 	if (newPassword.length == 0) {
 		document.getElementById('newPassValid').innerHTML = 'Enter New Password';
 		return false;
-	} else if (newPassword.length < 8) {
+	}
+	var up = 0;
+	var sm = 0;
+	var special = 0;
+	var num = 0;
+	var i = 0;
+
+	for (i; i < newPassword.length; i++) {
+
+		if (newPassword.charCodeAt(i) >= 65 && newPassword.charCodeAt(i) <= 90) {
+			up++;
+		} else if (newPassword.charCodeAt(i) >= 97
+				&& newPassword.charCodeAt(i) <= 122) {
+			sm++;
+		} else if (newPassword.charCodeAt(i) >= 48
+				&& newPassword.charCodeAt(i) <= 57) {
+			num++;
+		} else if (newPassword.charCodeAt(i) >= 32
+				&& newPassword.charCodeAt(i) <= 47
+				|| newPassword.charCodeAt(i) >= 58
+				&& newPassword.charCodeAt(i) <= 64) {
+			special++;
+		}
+
+	}
+	if (up == 0) {
+		document.getElementById('newPassValid').innerHTML = 'Enter atleast one upper case character';
+		return false;
+	}
+	if (sm == 0) {
+		document.getElementById('newPassValid').innerHTML = 'Enter atleast one small case character';
+		return false;
+	}
+	if (num == 0) {
+		document.getElementById('newPassValid').innerHTML = 'Enter atleast one num';
+		return false;
+	}
+	if (special == 0) {
+		document.getElementById('newPassValid').innerHTML = 'Enter atleast one Special character';
+		return false;
+	}
+	if (newPassword.length < 8) {
 		document.getElementById('newPassValid').innerHTML = 'Password Length must be 8 or above';
 		return false;
 	} else {
 		document.getElementById('newPassValid').innerHTML = '';
 	}
 
+	var comp = newPassword.localeCompare(oldPass);
 	if (oldPass.length == 0) {
-		document.getElementById('conPassValid').innerHTML = 'Enter New Password';
+		document.getElementById('conPassValid').innerHTML = 'Enter Confirm Password';
 		return false;
-	} else if (oldPass.length < 8) {
-		document.getElementById('conPassValid').innerHTML = 'Password Length must be 8 or above';
+	} else if (comp != 0) {
+		document.getElementById('conPassValid').innerHTML = 'Password Not matched';
+		console.log("password not matched");
 		return false;
 	} else {
 		document.getElementById('conPassValid').innerHTML = '';
 	}
-	if (oldPass != conPassValid) {
-		document.getElementById('conPassValid').innerHTML = 'Password Not matched';
-		return false;
 
-	}
+	console.log("upper case is " + up);
+	console.log("small case is " + sm);
+	console.log("special case is " + special);
+	console.log("num case is " + num);
 
 }

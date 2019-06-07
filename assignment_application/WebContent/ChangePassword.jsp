@@ -6,16 +6,38 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/header.css" />
-
+<link rel="stylesheet" href="assets/header-second-bar.css">
+<link href='http://fonts.googleapis.com/css?family=Cookie'
+	rel='stylesheet' type='text/css'>
 <title>Update Password</title>
+
 </head>
 <body>
-	<%@include file="Header.jsp"%>
+	<header class="header-two-bars">
+
+		<div class="header-first-bar">
+
+			<div class="header-limiter">
+				<img src="assets/logo.png" class="rounded float-left" width="250px"
+					height="100px"></img> <a href="SignIn.jsp" class="logout-button">Logout</a>
+				<a class="logout-button">${admin.firstName} ${admin.lastName}</a>
+			</div>
+
+		</div>
+	</header>
 	<div class="container  middle-section">
 		<h5 align="center">Update Password</h5>
 		<form action="changePassword" method="post"
 			onsubmit="return changePasswordValidation()">
 			<div id="validate" style="color: red;">${message}</div>
+			<div class="form-row">
+				<div class="col-md-3"></div>
+				<div class="col-md-5 mb-3">
+					<label for="userName">User Name</label> <input type="text"
+						class="form-control" id="userName" name="userName"
+						value='${admin.emailId}' readonly>
+				</div>
+			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 

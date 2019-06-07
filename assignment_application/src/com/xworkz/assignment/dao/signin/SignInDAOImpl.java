@@ -53,16 +53,8 @@ public class SignInDAOImpl implements ISignInDAO {
 			if (getAdminFromDb != null) {
 				session = sessionFactory.openSession();
 				transaction = session.beginTransaction();
-				if (getAdminFromDb.getFailLogin() == null) {
-					getAdminFromDb.setFailLogin(0);
-					System.out.println("Failed login : " + getAdminFromDb.getFailLogin());
-					session.update(getAdminFromDb);
-					transaction.commit();
-				} else if (getAdminFromDb.getFailLogin() >= 0) {
-					getAdminFromDb.setFailLogin(0);
-					session.update(getAdminFromDb);
-					transaction.commit();
-				}
+				session.update(getAdminFromDb);
+				transaction.commit();
 			}
 		} catch (HibernateException e) {
 			transaction.rollback();
@@ -70,5 +62,4 @@ public class SignInDAOImpl implements ISignInDAO {
 		}
 
 	}
-
 }
