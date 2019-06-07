@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.signin.SignInDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
+import com.xworkz.assignment.exception.DAOException;
 import com.xworkz.assignment.service.signin.ISignInService;
 
 @Controller
@@ -28,7 +29,9 @@ public class SignInController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView signIn(SignInDTO signInDTO) {
+	public ModelAndView signIn(SignInDTO signInDTO) throws DAOException {
+
+		System.out.println("invoked signin from controller " + signInDTO);
 		if (signInDTO != null) {
 			AdminEntity getAdminFromDb = signInService.signIn(signInDTO);
 			if (getAdminFromDb != null) {
@@ -49,7 +52,9 @@ public class SignInController {
 				return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user name");
 			}
 		} else {
+
 			return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user name");
 		}
+
 	}
 }

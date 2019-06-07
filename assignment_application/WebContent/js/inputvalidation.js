@@ -59,3 +59,43 @@ function getMessage(username, userpassword) {
 		return false;
 	}
 }
+
+function changePasswordValidation() {
+	var oldPass = document.getElementById('oldPassword').value;
+	if (oldPass.length == 0) {
+		document.getElementById('oldPass').innerHTML = 'Enter Old Password';
+		return false;
+	} else if (oldPass.length < 8) {
+		document.getElementById('oldPass').innerHTML = 'Password Length must be 8 or above';
+		return false;
+	} else {
+		document.getElementById('oldPass').innerHTML = '';
+	}
+	var newPassword = document.getElementById('newPassword').value;
+	var oldPass = document.getElementById('confirmPassword').value;
+	if (newPassword.length == 0) {
+		document.getElementById('newPassValid').innerHTML = 'Enter New Password';
+		return false;
+	} else if (newPassword.length < 8) {
+		document.getElementById('newPassValid').innerHTML = 'Password Length must be 8 or above';
+		return false;
+	} else {
+		document.getElementById('newPassValid').innerHTML = '';
+	}
+
+	if (oldPass.length == 0) {
+		document.getElementById('conPassValid').innerHTML = 'Enter New Password';
+		return false;
+	} else if (oldPass.length < 8) {
+		document.getElementById('conPassValid').innerHTML = 'Password Length must be 8 or above';
+		return false;
+	} else {
+		document.getElementById('conPassValid').innerHTML = '';
+	}
+	if (oldPass != conPassValid) {
+		document.getElementById('conPassValid').innerHTML = 'Password Not matched';
+		return false;
+
+	}
+
+}

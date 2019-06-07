@@ -27,6 +27,9 @@ public class SignUpServiceImpl implements ISignUpService {
 	private MailSenderToUser mailSender;
 
 	@Autowired
+	private IGetAdminEntityByEmailDAO getEntityByEmail;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	public SignUpServiceImpl() {
@@ -43,13 +46,10 @@ public class SignUpServiceImpl implements ISignUpService {
 			AdminEntity admin = getIdByEmail.getEntityByEmail(email);
 			if (firstName.length() < 4) {
 				isValid = false;
-				return "first name must be more then 4";
 			} else if (admin != null) {
 				isValid = false;
-				return "email already exist";
 			} else if (mobile.length() != 10) {
 				isValid = false;
-				return "enter valid phone number";
 			}
 			String password = "12345";
 			if (isValid) {
@@ -59,6 +59,7 @@ public class SignUpServiceImpl implements ISignUpService {
 				adminEntity.setFirstLogin(true);
 				adminEntity.setPassword(passwordEncoder.encode(password));
 				adminEntity.setDate(new Date() + "");
+				adminEntity.setFailLogin(0);
 				System.out.println(adminEntity);
 				Integer id = iSignUpDAO.save(adminEntity);
 				if (id != null && id > 0) {
@@ -69,7 +70,21 @@ public class SignUpServiceImpl implements ISignUpService {
 			System.err.println("Exception from Service" + e.getMessage());
 			throw new ServiceException("Exception from Service " + e.getMessage());
 		}
-		return "";
+		return "Sign Up Succesful";
+	}
+
+	@Override
+	public AdminEntity getAdminEntityByEmail(String email) {
+		AdminEntity adminEntity = null;
+
+		if (email != null) {
+			try {
+				adminEntity = getEntityByEmail.getEntityByEmail(email);
+			} catch (DAOException e) {
+				e.printStackTrace();
+			}
+		}
+		return adminEntity;
 	}
 
 }

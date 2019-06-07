@@ -36,10 +36,14 @@ public class SignInServiceImpl implements ISignInService {
 		try {
 			if (userid != null && password != null) {
 				getAdminFromDb = adminDAO.getEntityByEmail(userid);
+
 				if (getAdminFromDb != null) {
+
 					boolean matched = passwordEncoder.matches(password, getAdminFromDb.getPassword());
+					System.out.println("password matching : " + matched);
 					if (matched) {
 						getAdminFromDb.setPassword(password);
+						System.out.println("Sign In From service invoked " + getAdminFromDb.getPassword());
 					}
 				}
 			}
@@ -52,15 +56,16 @@ public class SignInServiceImpl implements ISignInService {
 	}
 
 	@Override
-	public void updateFailLogin(AdminEntity getAdminFromDb) {
-		getAdminFromDb.setPassword(passwordEncoder.encode(getAdminFromDb.getPassword()));
-		signInDAO.updateFailSignIn(getAdminFromDb);
+	public void updateFailLogin(AdminEntity getAdminFromDb) throws DAOException {
+		AdminEntity adminEntity = adminDAO.getEntityByEmail(getAdminFromDb.getEmailId());
+		signInDAO.updateFailSignIn(adminEntity);
 	}
 
 	@Override
-	public void updateFailLoginByZero(AdminEntity getAdminFromDb) {
-		getAdminFromDb.setPassword(passwordEncoder.encode(getAdminFromDb.getPassword()));
-		signInDAO.updateFailLoginByZero(getAdminFromDb);
+	public void updateFailLoginByZero(AdminEntity getAdminFromDb) throws DAOException {
+		AdminEntity adminEntity = adminDAO.getEntityByEmail(getAdminFromDb.getEmailId());
+		// getAdminFromDb.setPassword(passwordEncoder.encode(getAdminFromDb.getPassword()));
+		signInDAO.updateFailLoginByZero(adminEntity);
 
 	}
 

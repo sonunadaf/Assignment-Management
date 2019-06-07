@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.signup.SignUpDTO;
+import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.ControllerException;
 import com.xworkz.assignment.exception.ServiceException;
 import com.xworkz.assignment.service.signup.ISignUpService;
@@ -33,10 +34,23 @@ public class SignUpController {
 	@RequestMapping(value = "/adminSignUp", method = RequestMethod.POST)
 	public ModelAndView onSignUp(SignUpDTO signUpDTO, Model model) throws ControllerException {
 		String message = "";
-		try {
-			System.out.println(signUpDTO);
-			message = iSignUpService.signUp(signUpDTO);
+		AdminEntity adminEntity = null;
+		System.out.println(signUpDTO);
 
+		try {
+			if (signUpDTO != null) {
+				adminEntity = iSignUpService.getAdminEntityByEmail(signUpDTO.getEmailId());
+			}
+
+			if (signUpDTO.getFirstName().length() <= 3) {
+				return new ModelAndView("SignUp", "message", "First name must be more than 4 character");
+			} else if (signUpDTO.getPhoneNo().length() != 10) {
+				return new ModelAndView("SignUp", "message", "Mobile Number must be 10 digit");
+			} else if (adminEntity != null) {
+				return new ModelAndView("SignUp", "message", "Email already Exist");
+			} else {
+				message = iSignUpService.signUp(signUpDTO);
+			}
 		} catch (ServiceException e) {
 			System.err.println("Exception from controller" + e.getMessage());
 			throw new ControllerException("Exception from controller " + e.getMessage());

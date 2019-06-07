@@ -32,7 +32,7 @@
 				<div class="col-md-3 mb-3">
 					<label for="firstName">First name</label> <input type="text"
 						class="form-control" id="firstName" path="fname" name="firstName"
-						placeholder="First name">
+						placeholder="First name" required>
 					<errors path="fname" cssClass="error" />
 				</div>
 				<div class="col-md-3 mb-3">

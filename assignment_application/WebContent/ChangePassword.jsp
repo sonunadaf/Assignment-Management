@@ -7,38 +7,48 @@
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/header.css" />
 
-<title>Sign In</title>
+<title>Update Password</title>
 </head>
 <body>
 	<%@include file="Header.jsp"%>
 	<div class="container  middle-section">
-		<h5 align="center">Admin Sign In</h5>
-		<form action="login" method="post">
+		<h5 align="center">Update Password</h5>
+		<form action="changePassword" method="post"
+			onsubmit="return changePasswordValidation()">
 			<div id="validate" style="color: red;">${message}</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 
 				<div class="col-md-5 mb-3">
-					<label for="userName">User Name</label> <input type="text"
-						class="form-control" id="userName" name="user"
-						placeholder="User Name">
-					<div id="emailvalid" style="color: red;"></div>
+					<label for="oldPassword">Old Password</label> <input type="text"
+						class="form-control" id="oldPassword" name="oldPassword"
+						placeholder="Old Passwod">
+					<div id="oldPass" style="color: red;"></div>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
-					<label for="password">Password</label> <input type="password"
-						class="form-control" id="password" name="password"
-						placeholder="xxxxxxx">
-					<div id="passvalid" style="color: red;"></div>
+					<label for="newPassword">New Password</label> <input type="text"
+						class="form-control" id="newPassword" name="newPassword"
+						placeholder="New Password">
+					<div id="newPassValid" style="color: red;"></div>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-md-3"></div>
+				<div class="col-md-5 mb-3">
+					<label for="confirmPassword">Confirm Password</label> <input
+						type="text" class="form-control" id="confirmPassword"
+						name="confirmPassword" placeholder="Confirm Password">
+					<div id="conPassValid" style="color: red;"></div>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-2">
 					<input type="submit" class="btn btn-primary btn-lg btn-block"
-						value="Sign In"></input>
+						value="Update"></input>
 				</div>
 				<div class="col-md-2">
 					<a class="btn btn-primary btn-lg btn-block" href="Index.jsp"
