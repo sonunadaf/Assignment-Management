@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,14 +42,14 @@ public class SignInController {
 					if (getAdminFromDb.getFailLogin() < 3) {
 						signInService.updateFailLoginByZero(getAdminFromDb);
 						HttpSession session = request.getSession(true);
-						//session.setMaxInactiveInterval(60);
+						// session.setMaxInactiveInterval(60);
 						// session.invalidate();
 						session.setAttribute("admin", getAdminFromDb);
 						if (getAdminFromDb.isFirstLogin()) {
-							return new ModelAndView(EnumUtil.ChangePassword.toString(), "message", "Sign Successful");
+								return new ModelAndView(EnumUtil.ChangePassword.toString(), "message", "Sign Successful");
 						} else {
 							// implementation is incomplete
-							return new ModelAndView(EnumUtil.AdminHome.toString());
+							return new ModelAndView(EnumUtil.CreateAssignment.toString());
 						}
 					} else {
 						return new ModelAndView(EnumUtil.SignIn.toString(), "message",

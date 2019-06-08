@@ -14,7 +14,10 @@
 <body>
 	<div class="container  admin-section">
 		<h5 align="center">Create Assignment</h5>
-		<form action="createAssignment" method="post">
+		<h3 align="center" style="color: green;'">${assignmentId}</h3>
+
+		<form action="createAssignment" method="post"
+			onsubmit="return createAssignmentValidation()">
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
@@ -47,22 +50,23 @@
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
-					<label for="description">Description</label>
-					<textarea rows="4" cols="40" class="form-control"
+					<label for="description"><h5>Description</h5></label>
+					<textarea rows="3" cols="40" class="form-control"
 						name="description" id="description"></textarea>
+					<div name="desc" style="color: red"></div>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
-					<label for="lastDate">Deadline</label> <input type="Date"
+					<label for="lastDate"><h5>Deadline</h5></label> <input type="Date"
 						class="form-control" id="lastDate" name="lastDate">
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
-					<label for="uploadType">Upload Type</label> <select
+					<label for="uploadType"><h5>Upload Type</h5></label> <select
 						name='uploadType' class="form-control" id='uploadType'>
 						<option value=''>--select--</option>
 						<option>Git</option>
@@ -77,18 +81,18 @@
 						value="Create"></input>
 				</div>
 				<div class="col-md-2">
-					<a class="btn btn-primary btn-lg btn-block" href="AdminHome.jsp"
-						role="button">Cancel</a>
+					<a class="btn btn-primary btn-lg btn-block"
+						href="CreateAssignment.jsp" role="button">Cancel</a>
 				</div>
 			</div>
 	</div>
 	</form>
-	<%@include file="Footer.jsp"%>
+	</div>
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/input.js"></script>
-	</div>
-
+	<script src="js/inputvalidation.js"></script>
+	<%@include file="Footer.jsp"%>
 </body>
 
 </html>

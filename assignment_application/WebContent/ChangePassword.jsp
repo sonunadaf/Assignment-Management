@@ -27,9 +27,10 @@
 	</header>
 	<div class="container  middle-section">
 		<h5 align="center">Update Password</h5>
+		<h6 align="center" style="color: red">${updatemsg}</h6>
 		<form action="changePassword" method="post"
 			onsubmit="return changePasswordValidation()">
-			<div id="validate" style="color: red;">${message}</div>
+			<div id="validate" style="color: red;"></div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">

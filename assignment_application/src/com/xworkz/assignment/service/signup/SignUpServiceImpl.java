@@ -14,6 +14,7 @@ import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.DAOException;
 import com.xworkz.assignment.exception.ServiceException;
 import com.xworkz.assignment.mailsender.MailSenderToUser;
+import com.xworkz.assignment.passwordgenerator.UserPasswordGenerator;
 
 @Service
 public class SignUpServiceImpl implements ISignUpService {
@@ -25,6 +26,8 @@ public class SignUpServiceImpl implements ISignUpService {
 
 	@Autowired
 	private MailSenderToUser mailSender;
+	@Autowired
+	private UserPasswordGenerator gerenatePassword;
 
 	@Autowired
 	private IGetAdminEntityByEmailDAO getEntityByEmail;
@@ -51,7 +54,7 @@ public class SignUpServiceImpl implements ISignUpService {
 			} else if (mobile.length() != 10) {
 				isValid = false;
 			}
-			String password = "12345";
+			String password = gerenatePassword.generatePassayPassword();
 			if (isValid) {
 				AdminEntity adminEntity = new AdminEntity();
 				BeanUtils.copyProperties(signupDto, adminEntity);

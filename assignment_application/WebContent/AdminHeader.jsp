@@ -28,7 +28,8 @@
 					height="100px"></img>
 
 				<nav>
-					<a href="#" class="selected">Create Assignment</a> <a href="#"
+					<a href="CreateAssignment.jsp" class="selected">Create
+						Assignment</a> <a href="#"
 						class="selected">Assign</a> <a href="#" class="selected">Search</a>
 					<a href="#" class="selected">Settings</a>
 				</nav>

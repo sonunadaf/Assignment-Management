@@ -139,3 +139,14 @@ function changePasswordValidation() {
 	console.log("num case is " + num);
 
 }
+
+function createAssignmentValidation() {
+	var desc = document.getElementById('description').value;
+	if (desc.length == 0) {
+		document.getElementById('desc').innerHTML = 'Enter Description';
+		return false;
+	} else if (desc.length <= 10) {
+		document.getElementById('desc').innerHTML = 'Enter atleast 10 char';
+		return false;
+	}
+}
