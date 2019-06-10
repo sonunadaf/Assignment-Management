@@ -3,6 +3,8 @@ package com.xworkz.assignment.controller.createassignment;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ public class CreateAssignmentController {
 
 	@Autowired
 	private ICreateAssignentService iCreateAssignentService;
+	private static Logger logger = LoggerFactory.getLogger(CreateAssignmentController.class);
 
 	public CreateAssignmentController() {
 		System.out.println("created : " + this.getClass().getSimpleName());
@@ -29,22 +32,28 @@ public class CreateAssignmentController {
 	public ModelAndView onCreateAssignment(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-
+			return new ModelAndView(EnumUtil.CreateAssignment.toString());
 		}
-		return null;
+		return new ModelAndView(EnumUtil.SignIn.toString());
 	}
 
 	@RequestMapping(value = "/createAssignment", method = RequestMethod.POST)
 	public ModelAndView onCreateAssignment(CreateAssignmentDTO createAssignmentDTO, HttpServletRequest request) {
 		System.out.println("createAssingment : " + createAssignmentDTO);
 		HttpSession session = request.getSession(false);
-		if (session != null) {
-			AdminEntity adminEntity = (AdminEntity) session.getAttribute("admin");
-			String assignmentId = iCreateAssignentService.createAssignment(adminEntity.getEmailId(),
-					createAssignmentDTO);
-			System.out.println("created id : " + assignmentId);
-			return new ModelAndView(EnumUtil.CreateAssignment.toString(), "assignmentId",
-					"Created Assignment id " + assignmentId);
+		if (session != null ) {
+			try {
+				AdminEntity adminEntity = (AdminEntity) session.getAttribute("admin");
+				String assignmentId = iCreateAssignentService.createAssignment(adminEntity.getEmailId(),
+						createAssignmentDTO);
+				System.out.println("created id : " + assignmentId);
+				return new ModelAndView(EnumUtil.CreateAssignment.toString(), "assignmentId",
+						"Created Assignment id " + assignmentId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			return new ModelAndView(EnumUtil.SignIn.toString());
 		}
 		return new ModelAndView(EnumUtil.SignIn.toString());
 	}

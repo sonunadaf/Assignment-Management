@@ -46,7 +46,7 @@ public class SignInController {
 						// session.invalidate();
 						session.setAttribute("admin", getAdminFromDb);
 						if (getAdminFromDb.isFirstLogin()) {
-								return new ModelAndView(EnumUtil.ChangePassword.toString(), "message", "Sign Successful");
+							return new ModelAndView(EnumUtil.ChangePassword.toString(), "message", "Sign Successful");
 						} else {
 							// implementation is incomplete
 							return new ModelAndView(EnumUtil.CreateAssignment.toString());

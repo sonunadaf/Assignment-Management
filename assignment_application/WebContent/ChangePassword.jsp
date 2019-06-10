@@ -19,7 +19,11 @@
 
 			<div class="header-limiter">
 				<img src="assets/logo.png" class="rounded float-left" width="250px"
-					height="100px"></img> <a href="SignIn.jsp" class="logout-button">Logout</a>
+					height="100px"></img>
+
+				<form action="logOut">
+					<input type="submit" value="Logout" />
+				</form>
 				<a class="logout-button">${admin.firstName} ${admin.lastName}</a>
 			</div>
 

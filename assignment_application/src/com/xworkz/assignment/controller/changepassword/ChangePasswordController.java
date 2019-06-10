@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.changepassword.ChangePasswordDTO;
+import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.DAOException;
 import com.xworkz.assignment.service.changepassword.IChangePasswordService;
 
@@ -35,19 +36,24 @@ public class ChangePasswordController {
 	public ModelAndView changePassword(ChangePasswordDTO changePasswordDTO, HttpServletRequest request) {
 		System.out.println("change password " + changePasswordDTO);
 		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.getAttribute("admin");
-			try {
+		try {
+			if (session != null) {
+				AdminEntity admin = (AdminEntity) session.getAttribute("admin");
+
 				boolean result = changePasswordService.changePassword(changePasswordDTO);
 				if (result) {
 					return new ModelAndView(EnumUtil.CreateAssignment.toString(), "message",
-							"password change succesfull");
+							"password change succesfull").addObject("admin", admin);
 				} else {
-					return new ModelAndView(EnumUtil.ChangePassword.toString(), "updatemsg", "incorrect old password");
+					return new ModelAndView(EnumUtil.ChangePassword.toString(), "updatemsg", "incorrect old password")
+							.addObject("admin", admin);
 				}
-			} catch (DAOException e) {
-				e.printStackTrace();
+
+			} else {
+				return new ModelAndView(EnumUtil.SignIn.toString());
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return new ModelAndView(EnumUtil.SignIn.toString());
 	}

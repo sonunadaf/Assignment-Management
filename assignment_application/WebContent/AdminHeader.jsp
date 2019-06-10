@@ -29,12 +29,14 @@
 
 				<nav>
 					<a href="CreateAssignment.jsp" class="selected">Create
-						Assignment</a> <a href="#"
-						class="selected">Assign</a> <a href="#" class="selected">Search</a>
-					<a href="#" class="selected">Settings</a>
+						Assignment</a> <a href="#" class="selected">Assign</a> <a href="#"
+						class="selected">Search</a> <a href="#" class="selected">Settings</a>
 				</nav>
-				<a href="SignIn.jsp" class="logout-button">Logout</a> <a href="#"
-					class="logout-button">${admin.firstName} ${admin.lastName}</a>
+				<form action="logOut">
+					<input type="submit" value="Logout"></input>
+				</form>
+				<a href="#" class="logout-button">${admin.firstName}
+					${admin.lastName}</a>
 			</div>
 
 		</div>
