@@ -25,13 +25,16 @@ public class SignOutController {
 	@RequestMapping("/logOut")
 	public ModelAndView logOut(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		if (session != null && session.getAttribute("nadaf") != null) {
+		if (session != null) {
 			AdminEntity adminEntity = (AdminEntity) session.getAttribute("admin");
-			logger.error("invoked logOut method from " + this.getClass().getSimpleName());
+			// logger.error("invoked logOut method from " +
+			// this.getClass().getSimpleName());
 			System.err.println("session before logout : " + session);
-			session.removeAttribute("admin");
+			// session.removeAttribute("admin");
 			session.invalidate();
-			System.err.println("session after logout : " + session);
+			if(session!=null)
+				System.err.println("session after logout : " + session);
+			return new ModelAndView(EnumUtil.SignIn.toString());
 		}
 		return new ModelAndView(EnumUtil.SignIn.toString());
 	}

@@ -1,49 +1,47 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-
 <head>
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Home</title>
-
+<meta charset="ISO-8859-1">
+<title>Header</title>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/header.css" />
 <link rel="stylesheet" href="assets/header-second-bar.css">
-<link href='http://fonts.googleapis.com/css?family=Cookie'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-
+<style>
+.margin {
+	width: 150px;
+	margin-right: 3px;
+}
+</style>
 </head>
-
 <body>
-
-	<header class="header-two-bars">
-
-		<div class="header-first-bar">
-
-			<div class="header-limiter">
-				<img src="assets/logo.png" class="rounded float-left" width="250px"
-					height="100px"></img>
-
-				<nav>
-					<a href="CreateAssignment.jsp" class="selected">Create
-						Assignment</a> <a href="#" class="selected">Assign</a> <a href="#"
-						class="selected">Search</a> <a href="#" class="selected">Settings</a>
-				</nav>
+	<div class="container-fluid">
+		<div class="row header-background">
+			<div class="col-md-3">
+				<div class="site-logo">
+					<img src="img/logo.png" width="250px" height="100px">
+				</div>
+			</div>
+			<div class="col-md-6 float-right">
+				<br></br> <a href="CreateAssignment.jsp" class="btn btn-success">Create
+					Assignment</a> <a href="assignToAll" class="btn btn-success">Assign</a> <a
+					href="serarchData" class="btn btn-success">Search</a> <a href=""
+					class="btn btn-success">Settings</a>
+			</div>
+			<div class="col-md-2">
+				<br></br> <a href="#" class="btn btn-info float-right">
+					${admin.firstName} ${admin.lastName}</a>
+			</div>
+			<div class="col-md-1" style="color: white;">
+				<br></br>
 				<form action="logOut">
-					<input type="submit" value="Logout"></input>
+					<input type="submit" class="btn btn-danger float-left"
+						value="Logout"></input>
 				</form>
-				<a href="#" class="logout-button">${admin.firstName}
-					${admin.lastName}</a>
 			</div>
 
 		</div>
-	</header>
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+	</div>
 </body>
-
 </html>

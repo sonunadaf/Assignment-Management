@@ -13,22 +13,28 @@
 
 </head>
 <body>
-	<header class="header-two-bars">
-
-		<div class="header-first-bar">
-
-			<div class="header-limiter">
-				<img src="assets/logo.png" class="rounded float-left" width="250px"
-					height="100px"></img>
-
+	<div class="container-fluid">
+		<div class="row header-background">
+			<div class="col-md-3">
+				<div class="site-logo">
+					<img src="img/logo.png" width="250px" height="100px">
+				</div>
+			</div>
+			<div class="col-md-6 float-right"></div>
+			<div class="col-md-2">
+				<br></br> <a href="#" class="btn btn-info float-right">
+					${admin.firstName} ${admin.lastName}</a>
+			</div>
+			<div class="col-md-1" style="color: white;">
+				<br></br>
 				<form action="logOut">
-					<input type="submit" value="Logout" />
+					<input type="submit" class="btn btn-danger float-left"
+						value="Logout"></input>
 				</form>
-				<a class="logout-button">${admin.firstName} ${admin.lastName}</a>
 			</div>
 
 		</div>
-	</header>
+	</div>
 	<div class="container  middle-section">
 		<h5 align="center">Update Password</h5>
 		<h6 align="center" style="color: red">${updatemsg}</h6>
@@ -47,18 +53,18 @@
 				<div class="col-md-3"></div>
 
 				<div class="col-md-5 mb-3">
-					<label for="oldPassword">Old Password</label> <input type="text"
-						class="form-control" id="oldPassword" name="oldPassword"
-						placeholder="Old Passwod">
+					<label for="oldPassword">Old Password</label> <input
+						type="password" class="form-control" id="oldPassword"
+						name="oldPassword" placeholder="Old Passwod">
 					<div id="oldPass" style="color: red;"></div>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
-					<label for="newPassword">New Password</label> <input type="text"
-						class="form-control" id="newPassword" name="newPassword"
-						placeholder="New Password">
+					<label for="newPassword">New Password</label> <input
+						type="password" class="form-control" id="newPassword"
+						name="newPassword" placeholder="New Password">
 					<div id="newPassValid" style="color: red;"></div>
 				</div>
 			</div>
@@ -66,7 +72,7 @@
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
 					<label for="confirmPassword">Confirm Password</label> <input
-						type="text" class="form-control" id="confirmPassword"
+						type="password" class="form-control" id="confirmPassword"
 						name="confirmPassword" placeholder="Confirm Password">
 					<div id="conPassValid" style="color: red;"></div>
 				</div>

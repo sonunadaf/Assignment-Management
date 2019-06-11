@@ -37,11 +37,11 @@
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-2">
-					<input type="submit" class="btn btn-primary btn-lg btn-block"
+					<input type="submit" class="btn btn-success btn-lg btn-block"
 						value="Sign In"></input>
 				</div>
 				<div class="col-md-2">
-					<a class="btn btn-primary btn-lg btn-block" href="Index.jsp"
+					<a class="btn btn-danger btn-lg btn-block" href="Index.jsp"
 						role="button">Cancel</a>
 				</div>
 			</div>

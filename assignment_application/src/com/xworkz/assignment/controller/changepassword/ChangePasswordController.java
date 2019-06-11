@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.changepassword.ChangePasswordDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
-import com.xworkz.assignment.exception.DAOException;
 import com.xworkz.assignment.service.changepassword.IChangePasswordService;
 
 @Controller
@@ -39,7 +38,7 @@ public class ChangePasswordController {
 		try {
 			if (session != null) {
 				AdminEntity admin = (AdminEntity) session.getAttribute("admin");
-
+				System.err.println("session status : " + session != null);
 				boolean result = changePasswordService.changePassword(changePasswordDTO);
 				if (result) {
 					return new ModelAndView(EnumUtil.CreateAssignment.toString(), "message",

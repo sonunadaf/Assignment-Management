@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.signup.SignUpDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
+import com.xworkz.assignment.entity.member.MemberEntity;
 import com.xworkz.assignment.exception.ControllerException;
 import com.xworkz.assignment.exception.ServiceException;
 import com.xworkz.assignment.service.signup.ISignUpService;
@@ -35,21 +36,27 @@ public class SignUpController {
 	public ModelAndView onSignUp(SignUpDTO signUpDTO, Model model) throws ControllerException {
 		String message = "";
 		AdminEntity adminEntity = null;
+		MemberEntity member = null;
 		System.out.println(signUpDTO);
-
 		try {
 			if (signUpDTO != null) {
 				adminEntity = iSignUpService.getAdminEntityByEmail(signUpDTO.getEmailId());
+				member = iSignUpService.getMemberEntity(signUpDTO.getEmailId());
 			}
-
-			if (signUpDTO.getFirstName().length() <= 3) {
-				return new ModelAndView("SignUp", "message", "First name must be more than 4 character");
-			} else if (signUpDTO.getPhoneNo().length() != 10) {
-				return new ModelAndView("SignUp", "message", "Mobile Number must be 10 digit");
-			} else if (adminEntity != null) {
-				return new ModelAndView("SignUp", "message", "Email already Exist");
+			if (member != null) {
+				if (signUpDTO.getFirstName().length() <= 3) {
+					return new ModelAndView(EnumUtil.SignUp.toString(), "message",
+							"First name must be more than 4 character");
+				} else if (signUpDTO.getPhoneNo().length() != 10) {
+					return new ModelAndView(EnumUtil.SignUp.toString(), "message", "Mobile Number must be 10 digit");
+				} else if (adminEntity != null) {
+					return new ModelAndView(EnumUtil.SignUp.toString(), "message", "Email already Exist");
+				} else {
+					message = iSignUpService.signUp(signUpDTO);
+				}
 			} else {
-				message = iSignUpService.signUp(signUpDTO);
+				return new ModelAndView(EnumUtil.SignUp.toString(), "membererror",
+						"You are not member of our team please contact to Assignment Management team");
 			}
 		} catch (ServiceException e) {
 			System.err.println("Exception from controller" + e.getMessage());

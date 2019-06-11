@@ -26,7 +26,9 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.xworkz.assignment.entity.admin.AdminEntity</value>
-				<value>com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity</value>
+				<value>com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity
+				</value>
+				<value>com.xworkz.assignment.entity.member.MemberEntity</value>
 			</list>
 		</property>
 	</bean>

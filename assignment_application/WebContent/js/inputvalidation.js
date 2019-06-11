@@ -150,3 +150,13 @@ function createAssignmentValidation() {
 		return false;
 	}
 }
+
+function searchValidation() {
+
+	var search = document.getElementById('search').value;
+	if (search.length == 0) {
+		document.getElementById('validate').innerHTML = 'Enter pin';
+		return false;
+	}
+
+}

@@ -11,6 +11,7 @@ import com.xworkz.assignment.dao.signin.ISignInDAO;
 import com.xworkz.assignment.dto.signin.SignInDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.DAOException;
+import com.xworkz.assignment.exception.ServiceException;
 
 @Service
 public class SignInServiceImpl implements ISignInService {
@@ -27,7 +28,7 @@ public class SignInServiceImpl implements ISignInService {
 	}
 
 	@Override
-	public AdminEntity signIn(SignInDTO signInDTO) {
+	public AdminEntity signIn(SignInDTO signInDTO) throws ServiceException {
 
 		String userid = signInDTO.getUser();
 		String password = signInDTO.getPassword();
@@ -50,7 +51,7 @@ public class SignInServiceImpl implements ISignInService {
 				}
 			}
 		} catch (DAOException e) {
-			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

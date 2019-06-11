@@ -13,6 +13,7 @@ import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.signin.SignInDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.DAOException;
+import com.xworkz.assignment.exception.ServiceException;
 import com.xworkz.assignment.service.signin.ISignInService;
 
 @Controller
@@ -36,31 +37,39 @@ public class SignInController {
 
 		System.out.println("invoked signin from controller " + signInDTO);
 		if (signInDTO != null) {
-			AdminEntity getAdminFromDb = signInService.signIn(signInDTO);
-			if (getAdminFromDb != null) {
-				if (signInDTO.getPassword().equals(getAdminFromDb.getPassword())) {
-					if (getAdminFromDb.getFailLogin() < 3) {
-						signInService.updateFailLoginByZero(getAdminFromDb);
-						HttpSession session = request.getSession(true);
-						// session.setMaxInactiveInterval(60);
-						// session.invalidate();
-						session.setAttribute("admin", getAdminFromDb);
-						if (getAdminFromDb.isFirstLogin()) {
-							return new ModelAndView(EnumUtil.ChangePassword.toString(), "message", "Sign Successful");
-						} else {
-							// implementation is incomplete
-							return new ModelAndView(EnumUtil.CreateAssignment.toString());
-						}
-					} else {
-						return new ModelAndView(EnumUtil.SignIn.toString(), "message",
-								"You have have entered 3 time wrong password,  please contact Assignment Mannagement Customer Care");
-					}
+			AdminEntity getAdminFromDb;
+			try {
+				getAdminFromDb = signInService.signIn(signInDTO);
 
+				if (getAdminFromDb != null) {
+					if (signInDTO.getPassword().equals(getAdminFromDb.getPassword())) {
+						if (getAdminFromDb.getFailLogin() < 3) {
+							signInService.updateFailLoginByZero(getAdminFromDb);
+							HttpSession session = request.getSession(true);
+							// session.setMaxInactiveInterval(60);
+							// session.invalidate();
+							session.setAttribute("admin", getAdminFromDb);
+							if (getAdminFromDb.isFirstLogin()) {
+								return new ModelAndView(EnumUtil.ChangePassword.toString(), "message",
+										"Signin successful");
+							} else {
+								// implementation is incomplete
+								return new ModelAndView(EnumUtil.CreateAssignment.toString());
+							}
+						} else {
+							return new ModelAndView(EnumUtil.SignIn.toString(), "message",
+									"You have have entered 3 time's wrong password,  please contact Assignment Mannagement Customer Care");
+						}
+
+					} else {
+						signInService.updateFailLogin(getAdminFromDb);
+						return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user password");
+					}
 				} else {
-					signInService.updateFailLogin(getAdminFromDb);
-					return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user password");
+					return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user name");
 				}
-			} else {
+			} catch (ServiceException e) {
+				e.printStackTrace();
 				return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user name");
 			}
 		} else {

@@ -2,15 +2,19 @@ package com.xworkz.assignment.service.signup;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.xworkz.assignment.dao.getadminentitybyemail.IGetAdminEntityByEmailDAO;
+import com.xworkz.assignment.dao.member.GetMemberByEmail;
 import com.xworkz.assignment.dao.signup.ISignUpDAO;
 import com.xworkz.assignment.dto.signup.SignUpDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
+import com.xworkz.assignment.entity.member.MemberEntity;
 import com.xworkz.assignment.exception.DAOException;
 import com.xworkz.assignment.exception.ServiceException;
 import com.xworkz.assignment.mailsender.MailSenderToUser;
@@ -34,6 +38,10 @@ public class SignUpServiceImpl implements ISignUpService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private GetMemberByEmail getMemberByEmail;
+
+	private static Logger logger = LoggerFactory.getLogger(SignUpServiceImpl.class);
 
 	public SignUpServiceImpl() {
 		System.out.println("created : " + this.getClass().getSimpleName());
@@ -88,6 +96,21 @@ public class SignUpServiceImpl implements ISignUpService {
 			}
 		}
 		return adminEntity;
+	}
+
+	@Override
+	public MemberEntity getMemberEntity(String email) throws ServiceException {
+		MemberEntity memberEntity = null;
+		if (email != null) {
+
+			try {
+				memberEntity = getMemberByEmail.getMemberEntity(email);
+			} catch (DAOException e) {
+				logger.error(e.getMessage());
+				throw new ServiceException(e.getMessage());
+			}
+		}
+		return memberEntity;
 	}
 
 }
