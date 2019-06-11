@@ -2,6 +2,7 @@ package com.xworkz.assignment.dao.createassignment;
 
 import java.io.Serializable;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity;
+import com.xworkz.assignment.exception.DAOException;
 
 @Repository
 public class CreateAssignmentDAOImpl implements ICreateAssignmentDAO {
@@ -17,12 +19,22 @@ public class CreateAssignmentDAOImpl implements ICreateAssignmentDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Integer saveCreatedAssignment(CreateAssignmentEntity assignmentEntity) {
-		// TODO Auto-generated method stub
-		Session session = sessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
-		Serializable serializable = session.save(assignmentEntity);
-		transaction.commit();
+	public Integer saveCreatedAssignment(CreateAssignmentEntity assignmentEntity) throws DAOException {
+		Session session = null;
+		Serializable serializable = null;
+
+		try {
+			session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			serializable = session.save(assignmentEntity);
+			transaction.commit();
+		} catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			session.close();
+		}
 
 		return (Integer) serializable;
 	}

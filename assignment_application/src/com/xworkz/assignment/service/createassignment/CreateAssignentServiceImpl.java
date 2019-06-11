@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.xworkz.assignment.dao.createassignment.ICreateAssignmentDAO;
 import com.xworkz.assignment.dto.createassignment.CreateAssignmentDTO;
 import com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity;
+import com.xworkz.assignment.exception.DAOException;
+import com.xworkz.assignment.exception.ServiceException;
 
 @Service
 public class CreateAssignentServiceImpl implements ICreateAssignentService {
@@ -28,7 +30,7 @@ public class CreateAssignentServiceImpl implements ICreateAssignentService {
 	}
 
 	@Override
-	public String createAssignment(String email, CreateAssignmentDTO assignmentDTO) {
+	public String createAssignment(String email, CreateAssignmentDTO assignmentDTO) throws ServiceException {
 		System.out.println("emial from createAssignment : " + email);
 		System.out.println("AssignmentDTO from : " + assignmentDTO);
 		try {
@@ -41,8 +43,12 @@ public class CreateAssignentServiceImpl implements ICreateAssignentService {
 				Integer id = assignmentDAO.saveCreatedAssignment(assignmentEntity);
 				return id + "";
 			}
-		} catch (BeansException e) {
-			e.printStackTrace();
+		} catch (BeansException | DAOException e) {
+			logger.error(e.getMessage());
+			throw new ServiceException(e.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new ServiceException(e.getMessage());
 		}
 		return null;
 	}

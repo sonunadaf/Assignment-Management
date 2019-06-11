@@ -12,33 +12,52 @@
 <body>
 	<%@include file="Header.jsp"%>
 	<div class="container  middle-section">
-		<h5 align="center">Admin Sign In</h5>
-		<form action="login" method="post">
-			<div id="validate" style="color: red;">${message}</div>
+		<h5 align="center">Upload Assignment</h5>
+		<form action="uploadAssignment">
 			<div class="form-row">
 				<div class="col-md-3"></div>
 
 				<div class="col-md-5 mb-3">
-					<label for="userName">User Name</label> <input type="text"
-						class="form-control" id="userName" name="user"
-						placeholder="User Name">
+					<label for="emailId">Email</label> <input type="email"
+						class="form-control" id="emailId" name="emailId"
+						placeholder="xxxxx@gmail.com" required="required">
 					<div id="emailvalid" style="color: red;"></div>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
-					<label for="password">Password</label> <input type="password"
-						class="form-control" id="password" name="password"
-						placeholder="xxxxxxx">
-					<div id="passvalid" style="color: red;"></div>
+					<label for="pin">Assignment Pin</label> <input type="text"
+						class="form-control" id="pin" name="pin" placeholder="xxxxxx" required="required">
+					<div id="pinValid" style="color: red;"></div>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-md-3"></div>
+				<div class="col-md-5 mb-3">
+					<label for="uri">URI</label> <input type="url" class="form-control"
+						id="uri" name="uri" placeholder="uri">
+					<div id="uriValid" style="color: red;"></div>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-md-5"></div>
+				<div class="col-md-3 mb-3">OR</div>
+			</div>
+			<div class="form-row">
+				<div class="col-md-3"></div>
+				<div class="col-md-5 mb-3">
+					<label for="file">File</label> <input type="file"
+						class="form-control" id="file" name="file"
+						placeholder="upload zip file only">
+					<div id="fileValid" style="color: red;"></div>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-2">
 					<input type="submit" class="btn btn-dark btn-lg btn-block"
-						value="Sign In"></input>
+						value="Upload"></input>
 				</div>
 				<div class="col-md-2">
 					<a class="btn btn-danger btn-lg btn-block" href="Index.jsp"

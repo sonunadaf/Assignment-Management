@@ -78,21 +78,21 @@ public class SignUpServiceImpl implements ISignUpService {
 				}
 			}
 		} catch (DAOException e) {
-			System.err.println("Exception from Service" + e.getMessage());
 			throw new ServiceException("Exception from Service " + e.getMessage());
 		}
 		return "Sign Up Succesful";
 	}
 
 	@Override
-	public AdminEntity getAdminEntityByEmail(String email) {
+	public AdminEntity getAdminEntityByEmail(String email) throws ServiceException {
 		AdminEntity adminEntity = null;
 
 		if (email != null) {
 			try {
 				adminEntity = getEntityByEmail.getEntityByEmail(email);
 			} catch (DAOException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
+				throw new ServiceException(e.getMessage());
 			}
 		}
 		return adminEntity;

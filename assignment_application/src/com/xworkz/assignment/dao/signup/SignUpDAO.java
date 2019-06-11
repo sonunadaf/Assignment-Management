@@ -29,11 +29,9 @@ public class SignUpDAO implements ISignUpDAO {
 			return id;
 		} catch (HibernateException e) {
 			transaction.rollback();
-			System.err.println("Exception from Service" + e.getMessage());
 			throw new DAOException("Exception from DAO " + e.getMessage());
 		} catch (Exception e) {
 			transaction.rollback();
-			System.err.println("Exception from Service" + e.getMessage());
 			throw new DAOException("Exception from DAO " + e.getMessage());
 		} finally {
 			session.close();

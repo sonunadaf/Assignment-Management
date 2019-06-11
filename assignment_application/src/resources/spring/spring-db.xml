@@ -29,6 +29,7 @@
 				<value>com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity
 				</value>
 				<value>com.xworkz.assignment.entity.member.MemberEntity</value>
+				<value>com.xworkz.assignment.entity.settings.SettingsEntity</value>
 			</list>
 		</property>
 	</bean>

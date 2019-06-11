@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.createassignment.CreateAssignmentDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
+import com.xworkz.assignment.exception.ControllerException;
+import com.xworkz.assignment.exception.ServiceException;
 import com.xworkz.assignment.service.createassignment.ICreateAssignentService;
 
 @Controller
@@ -32,16 +34,18 @@ public class CreateAssignmentController {
 	public ModelAndView onCreateAssignment(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			return new ModelAndView(EnumUtil.CreateAssignment.toString());
+			AdminEntity admin = (AdminEntity) session.getAttribute("admin");
+			return new ModelAndView(EnumUtil.CreateAssignment.toString()).addObject("admin", admin);
 		}
 		return new ModelAndView(EnumUtil.SignIn.toString());
 	}
 
 	@RequestMapping(value = "/createAssignment", method = RequestMethod.POST)
-	public ModelAndView onCreateAssignment(CreateAssignmentDTO createAssignmentDTO, HttpServletRequest request) {
-		System.out.println("createAssingment : " + createAssignmentDTO);
+	public ModelAndView onCreateAssignment(CreateAssignmentDTO createAssignmentDTO, HttpServletRequest request)
+			throws ControllerException {
+
 		HttpSession session = request.getSession(false);
-		if (session != null ) {
+		if (session != null) {
 			try {
 				AdminEntity adminEntity = (AdminEntity) session.getAttribute("admin");
 				String assignmentId = iCreateAssignentService.createAssignment(adminEntity.getEmailId(),
@@ -49,13 +53,15 @@ public class CreateAssignmentController {
 				System.out.println("created id : " + assignmentId);
 				return new ModelAndView(EnumUtil.CreateAssignment.toString(), "assignmentId",
 						"Created Assignment id " + assignmentId);
+			} catch (ServiceException e) {
+				logger.error(e.getMessage());
+				throw new ControllerException(e.getMessage());
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new ControllerException(e.getMessage());
 			}
 		} else {
 			return new ModelAndView(EnumUtil.SignIn.toString());
 		}
-		return new ModelAndView(EnumUtil.SignIn.toString());
 	}
 
 }

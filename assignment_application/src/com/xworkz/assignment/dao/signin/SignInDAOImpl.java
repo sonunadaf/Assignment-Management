@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.xworkz.assignment.entity.admin.AdminEntity;
+import com.xworkz.assignment.exception.DAOException;
 
 @Repository
 public class SignInDAOImpl implements ISignInDAO {
@@ -16,9 +17,7 @@ public class SignInDAOImpl implements ISignInDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void updateFailSignIn(AdminEntity adminEntity) {
-		System.out.println("updateFailSignIn from ");
-
+	public void updateFailSignIn(AdminEntity adminEntity) throws DAOException {
 		Session session = null;
 		Transaction transaction = null;
 		System.out.println("Failed login : " + adminEntity.getFailLogin());
@@ -40,12 +39,15 @@ public class SignInDAOImpl implements ISignInDAO {
 			}
 		} catch (HibernateException e) {
 			transaction.rollback();
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new DAOException(e.getMessage());
 		}
 	}
 
 	@Override
-	public void updateFailLoginByZero(AdminEntity getAdminFromDb) {
+	public void updateFailLoginByZero(AdminEntity getAdminFromDb) throws DAOException {
 		Session session = null;
 		Transaction transaction = null;
 		System.out.println("Failed login : " + getAdminFromDb.getFailLogin());
@@ -58,7 +60,10 @@ public class SignInDAOImpl implements ISignInDAO {
 			}
 		} catch (HibernateException e) {
 			transaction.rollback();
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new DAOException(e.getMessage());
 		}
 
 	}

@@ -10,13 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.entity.admin.AdminEntity;
+import com.xworkz.assignment.exception.ControllerException;
 
 @Controller
 @RequestMapping("/")
 public class SearchController {
 
 	@RequestMapping(value = "/serarchData", method = RequestMethod.GET)
-	public ModelAndView search(HttpServletRequest request) {
+	public ModelAndView search(HttpServletRequest request) throws ControllerException {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null) {
@@ -24,7 +25,7 @@ public class SearchController {
 				return new ModelAndView(EnumUtil.Search.toString()).addObject("admin", admin);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ControllerException(e.getMessage());
 		}
 
 		return new ModelAndView(EnumUtil.SignIn.toString());

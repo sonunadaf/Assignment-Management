@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.xworkz.assignment.entity.admin.AdminEntity;
+import com.xworkz.assignment.exception.DAOException;
 
 @Repository
 public class ChangePasswordDAOImpl implements IChangePasswordDAO {
@@ -16,24 +17,29 @@ public class ChangePasswordDAOImpl implements IChangePasswordDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public boolean changePassword(AdminEntity adminEntity) {
+	public boolean changePassword(AdminEntity adminEntity) throws DAOException {
 
 		Session session = null;
 		Transaction transaction = null;
+		boolean status = false;
 		try {
 			session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
 			session.saveOrUpdate(adminEntity);
 			transaction.commit();
-			return true;
+			status = true;
 		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			transaction.rollback();
-			return false;
+			throw new DAOException(e.getMessage());
+
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new DAOException(e.getMessage());
+
 		} finally {
 			session.close();
 		}
+		return status;
 	}
 
 }

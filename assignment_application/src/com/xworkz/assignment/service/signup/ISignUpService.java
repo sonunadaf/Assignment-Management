@@ -9,7 +9,7 @@ public interface ISignUpService {
 
 	public String signUp(SignUpDTO signupDto) throws ServiceException;
 
-	public AdminEntity getAdminEntityByEmail(String email);
+	public AdminEntity getAdminEntityByEmail(String email) throws ServiceException;
 	
 	public MemberEntity getMemberEntity(String email) throws ServiceException;
 

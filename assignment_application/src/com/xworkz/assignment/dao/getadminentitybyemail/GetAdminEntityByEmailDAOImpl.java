@@ -29,7 +29,9 @@ public class GetAdminEntityByEmailDAOImpl implements IGetAdminEntityByEmailDAO {
 				return (AdminEntity) adminEntity;
 			}
 		} catch (HibernateException e) {
-			System.err.println("Exception from Dao validation : " + e.getMessage());
+			throw new DAOException(e.getMessage());
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage());
 		} finally {
 			session.close();
 		}

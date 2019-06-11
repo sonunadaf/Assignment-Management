@@ -24,10 +24,10 @@
 				</div>
 			</div>
 			<div class="col-md-6 float-right">
-				<br></br> <a href="CreateAssignment.jsp" class="btn btn-success">Create
-					Assignment</a> <a href="assignToAll" class="btn btn-success">Assign</a> <a
-					href="serarchData" class="btn btn-success">Search</a> <a href=""
-					class="btn btn-success">Settings</a>
+				<br></br> <a href="createAssignment" class="btn btn-success">Create
+					Assignment</a> <a href="assignToAll" class="btn btn-success">Assign</a>
+				<a href="serarchData" class="btn btn-success">Search</a> <a
+					href="adminSettings" class="btn btn-success">Settings</a>
 			</div>
 			<div class="col-md-2">
 				<br></br> <a href="#" class="btn btn-info float-right">

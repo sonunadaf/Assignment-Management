@@ -16,13 +16,12 @@
 					<img src="img/logo.png" width="250px" height="100px">
 				</div>
 			</div>
-			<nav class="main-menu ">
+			<nav class="main-menu">
 				<ul>
 					<li><a href="Index.jsp">Home</a></li>
-					<li><a href="#">About</a></li>
 					<li><a href="SignUp.jsp">Sign Up</a></li>
 					<li><a href="SignIn.jsp">Sign In</a></li>
-					<li><a href="#">Upload</a></li>
+					<li><a href="Upload.jsp">Upload</a></li>
 				</ul>
 			</nav>
 		</div>
