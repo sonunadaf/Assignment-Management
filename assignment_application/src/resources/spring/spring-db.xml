@@ -30,6 +30,8 @@
 				</value>
 				<value>com.xworkz.assignment.entity.member.MemberEntity</value>
 				<value>com.xworkz.assignment.entity.settings.SettingsEntity</value>
+				<value>com.xworkz.assignment.entity.upload.UploadStudentAssignmentEntity
+				</value>
 			</list>
 		</property>
 	</bean>

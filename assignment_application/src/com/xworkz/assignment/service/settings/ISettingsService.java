@@ -5,6 +5,6 @@ import com.xworkz.assignment.exception.ServiceException;
 
 public interface ISettingsService {
 
-	public Boolean updateSettings(SettingsDTO settingsDTO) throws ServiceException;
+	public Boolean updateSettings(SettingsDTO settingsDTO, String ipAddress) throws ServiceException;
 
 }

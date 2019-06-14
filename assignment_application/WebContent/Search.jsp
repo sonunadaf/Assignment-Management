@@ -20,7 +20,7 @@
 			<div class="col-md-4"></div>
 			<div class="col-md-4 mb-3">
 				<a id="validate" style="color: red; font-size: 25px;"></a> <label
-					for="search"></label><input type="text" class="form-control"
+					for="search"></label><input type="number" class="form-control"
 					id="search" name="search">
 			</div>
 			<div class="col-md-2 mb-3"></div>

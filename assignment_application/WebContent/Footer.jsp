@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="css/header.css" />
 </head>
 <body>
-	<div class="container-fluid header-background">
+	<div class="container-fluid header-background sticky-bottom">
 		<div class="row justify-content-md-center">
 			<p style="color: seashell">© 2019 X-Workz . All Rights Reserved</p>
 		</div>

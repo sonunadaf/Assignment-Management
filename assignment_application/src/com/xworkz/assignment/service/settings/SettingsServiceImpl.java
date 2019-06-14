@@ -30,7 +30,7 @@ public class SettingsServiceImpl implements ISettingsService {
 	}
 
 	@Override
-	public Boolean updateSettings(SettingsDTO settingsDTO) throws ServiceException {
+	public Boolean updateSettings(SettingsDTO settingsDTO, String ipAddress) throws ServiceException {
 		boolean update = false;
 		try {
 
@@ -46,6 +46,7 @@ public class SettingsServiceImpl implements ISettingsService {
 				settingsEntity.setProperty("First Name");
 				settingsEntity.setOldValue(adminEntity.getFirstName());
 				settingsEntity.setNewValue(settingsDTO.getFirstName());
+				settingsEntity.setIpAddress(ipAddress);
 				settingsDAO.updateSettings(settingsEntity);
 				adminEntity.setFirstName(fName);
 				update = true;
@@ -59,6 +60,7 @@ public class SettingsServiceImpl implements ISettingsService {
 				settingsEntity.setProperty("Last Name");
 				settingsEntity.setOldValue(adminEntity.getLastName());
 				settingsEntity.setNewValue(settingsDTO.getLastName());
+				settingsEntity.setIpAddress(ipAddress);
 				settingsDAO.updateSettings(settingsEntity);
 				adminEntity.setLastName(lName);
 
@@ -74,6 +76,7 @@ public class SettingsServiceImpl implements ISettingsService {
 				settingsEntity.setProperty("Phone Number");
 				settingsEntity.setOldValue(adminEntity.getContactNumber());
 				settingsEntity.setNewValue(settingsDTO.getPhoneNUmber());
+				settingsEntity.setIpAddress(ipAddress);
 				settingsDAO.updateSettings(settingsEntity);
 				adminEntity.setContactNumber(phoneNumber);
 				update = true;

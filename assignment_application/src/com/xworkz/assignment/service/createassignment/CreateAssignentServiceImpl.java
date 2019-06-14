@@ -15,12 +15,15 @@ import com.xworkz.assignment.dto.createassignment.CreateAssignmentDTO;
 import com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity;
 import com.xworkz.assignment.exception.DAOException;
 import com.xworkz.assignment.exception.ServiceException;
+import com.xworkz.assignment.mailsender.createassignment.CreateAssignmentMailSend;
 
 @Service
 public class CreateAssignentServiceImpl implements ICreateAssignentService {
 
 	@Autowired
 	private ICreateAssignmentDAO assignmentDAO;
+	@Autowired
+	private CreateAssignmentMailSend createAssignmentMailSend;
 
 	private static Logger logger = LoggerFactory.getLogger(CreateAssignentServiceImpl.class);
 
@@ -41,6 +44,9 @@ public class CreateAssignentServiceImpl implements ICreateAssignentService {
 				assignmentEntity.setEmail(email);
 				System.out.println(assignmentEntity);
 				Integer id = assignmentDAO.saveCreatedAssignment(assignmentEntity);
+				if (id != null && id != 0) {
+					createAssignmentMailSend.createAssignmentMailSend(email, id);
+				}
 				return id + "";
 			}
 		} catch (BeansException | DAOException e) {

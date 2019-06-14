@@ -24,15 +24,17 @@ public class SignOutController {
 
 	@RequestMapping("/logOut")
 	public ModelAndView logOut(HttpServletRequest request) throws ControllerException {
-		HttpSession session = request.getSession(false);
+
 		try {
+			HttpSession session = request.getSession(false);
 			if (session != null) {
 				session.invalidate();
-				if (session != null)
-					System.err.println("session after logout : " + session);
+				session = null;
 				return new ModelAndView(EnumUtil.SignIn.toString());
 			}
 		} catch (Exception e) {
+			logger.error("Exception from Sign out Controller " + e.getMessage());
+			e.printStackTrace();
 			throw new ControllerException(e.getMessage());
 		}
 		return new ModelAndView(EnumUtil.SignIn.toString());

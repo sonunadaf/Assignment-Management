@@ -1,5 +1,6 @@
 package com.xworkz.assignment.service.signin;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +80,7 @@ public class SignInServiceImpl implements ISignInService {
 
 			if (adminEntity != null) {
 				adminEntity.setFailLogin(0);
-				adminEntity.setLastLogin(new Date() + "");
+				adminEntity.setLastLogin(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
 			}
 			signInDAO.updateFailLoginByZero(adminEntity);
 		} catch (DAOException e) {

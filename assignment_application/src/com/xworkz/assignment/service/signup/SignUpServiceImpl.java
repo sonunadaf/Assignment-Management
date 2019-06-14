@@ -1,5 +1,6 @@
 package com.xworkz.assignment.service.signup;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -71,6 +72,7 @@ public class SignUpServiceImpl implements ISignUpService {
 				adminEntity.setPassword(passwordEncoder.encode(password));
 				adminEntity.setDate(new Date() + "");
 				adminEntity.setFailLogin(0);
+				adminEntity.setLastLogin(new SimpleDateFormat("YYYY-MM-DD HH:MM:SS").format(new Date()));
 				System.out.println(adminEntity);
 				Integer id = iSignUpDAO.save(adminEntity);
 				if (id != null && id > 0) {

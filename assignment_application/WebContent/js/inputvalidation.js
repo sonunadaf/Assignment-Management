@@ -160,3 +160,24 @@ function searchValidation() {
 	}
 
 }
+
+function studentFilter() {
+	var upFile = document.getElementById('file').value;
+	var re_text = /\.rar|\.tar.gz|\.zip/i;
+	console.log("upload zip file");
+	var git = document.getElementById('gitUrl').value;
+	if (git.length == 0 && upFile == '') {
+		console.log("empty url link ");
+		document.getElementById('fileValid').innerHTML = 'choose atleast one url or upload zip file';
+		console.log("uploade file status : " + upFile);
+		return false;
+	}
+	if (upFile.search(re_text) == -1) {
+		if (upFile == '')
+			return 
+		console.log("hello world ");
+		console.log(re_text);
+		document.getElementById('fileValid').innerHTML = 'Incorrect File extension Should be zip,rar';
+		return false;
+	}
+}

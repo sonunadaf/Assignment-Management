@@ -38,7 +38,6 @@ public class ChangePasswordController {
 		try {
 			if (session != null) {
 				AdminEntity admin = (AdminEntity) session.getAttribute("admin");
-				System.err.println("session status : " + session != null);
 				boolean result = changePasswordService.changePassword(changePasswordDTO);
 				if (result) {
 					return new ModelAndView(EnumUtil.CreateAssignment.toString(), "message",

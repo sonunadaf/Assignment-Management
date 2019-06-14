@@ -21,7 +21,7 @@ public class SelectAllCreatedAssignmentRestController {
 	@Autowired
 	private ISearchAllServiceRestController allServiceRestController;
 
-	@GetMapping("/searchAll")
+	@GetMapping(value = "/searchAll")
 	public List<CreateAssignmentEntity> getAllSearch(HttpServletRequest request) throws ControllerException {
 		List<CreateAssignmentEntity> list = null;
 		System.err.println("invoked search all");

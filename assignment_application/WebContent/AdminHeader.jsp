@@ -23,15 +23,17 @@
 					<img src="img/logo.png" width="250px" height="100px">
 				</div>
 			</div>
-			<div class="col-md-6 float-right">
+			<div class="col-md-5 float-right">
 				<br></br> <a href="createAssignment" class="btn btn-success">Create
 					Assignment</a> <a href="assignToAll" class="btn btn-success">Assign</a>
 				<a href="serarchData" class="btn btn-success">Search</a> <a
 					href="adminSettings" class="btn btn-success">Settings</a>
 			</div>
-			<div class="col-md-2">
-				<br></br> <a href="#" class="btn btn-info float-right">
-					${admin.firstName} ${admin.lastName}</a>
+			<div class="col-md-3">
+				<a class=" float-right" style="color: white;">Last Sign In :
+					${admin.lastLogin}</a><br></br> <a href="#"
+					class="btn btn-info float-right"> ${admin.firstName}
+					${admin.lastName}</a>
 			</div>
 			<div class="col-md-1" style="color: white;">
 				<br></br>

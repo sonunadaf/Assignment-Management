@@ -9,6 +9,7 @@ import com.xworkz.assignment.dao.getadminentitybyemail.IGetAdminEntityByEmailDAO
 import com.xworkz.assignment.dto.changepassword.ChangePasswordDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.DAOException;
+import com.xworkz.assignment.mailsender.changepassword.ChangePasswordMailSend;
 
 @Service
 public class ChangePasswordServiceImpl implements IChangePasswordService {
@@ -19,6 +20,8 @@ public class ChangePasswordServiceImpl implements IChangePasswordService {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private IChangePasswordDAO changePasswordDAO;
+	@Autowired
+	private ChangePasswordMailSend changePasswordMailSend;
 
 	public ChangePasswordServiceImpl() {
 		System.out.println("created : " + this.getClass().getSimpleName());
@@ -40,6 +43,9 @@ public class ChangePasswordServiceImpl implements IChangePasswordService {
 					adminEntity.setPassword(passwordEncoder.encode(newPass));
 					adminEntity.setFirstLogin(false);
 					boolean result = changePasswordDAO.changePassword(adminEntity);
+					if (result) {
+						changePasswordMailSend.createAssignmentMailSend(email, newPass);
+					}
 					return result;
 				}
 			}

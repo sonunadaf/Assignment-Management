@@ -2,7 +2,6 @@ package com.xworkz.assignment.controller.settings;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.xworkz.assignment.constants.EnumUtil;
 import com.xworkz.assignment.dto.settings.SettingsDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
@@ -31,6 +29,7 @@ public class SettingsController {
 	public ModelAndView updateSettings(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (session != null) {
+
 			AdminEntity admin = (AdminEntity) session.getAttribute("admin");
 			return new ModelAndView(EnumUtil.Settings.toString()).addObject("admin", admin);
 		} else {
@@ -45,7 +44,8 @@ public class SettingsController {
 			if (session != null) {
 
 				AdminEntity admin = (AdminEntity) session.getAttribute("admin");
-				boolean status = settingsService.updateSettings(settingsDTO);
+				String ipAddress = request.getRemoteAddr();
+				boolean status = settingsService.updateSettings(settingsDTO,ipAddress);
 				if (status) {
 					return new ModelAndView(EnumUtil.SignIn.toString(), "message", "Updated Successful")
 							.addObject("admin", admin);

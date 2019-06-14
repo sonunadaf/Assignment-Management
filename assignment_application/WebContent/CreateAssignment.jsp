@@ -22,7 +22,7 @@
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
 					<label for="courseName"><h5>Course</h5></label> <select
-						name='courseName' class="form-control" id='courseName'>
+						name='courseName' class="form-control" id='courseName' required>
 						<option value=''>--select--</option>
 						<option>Servlet</option>
 						<option>Spring</option>
@@ -35,7 +35,7 @@
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
 					<label for="topicName"><h5>Topic</h5></label> <select
-						name='topicName' class="form-control" id='topicName'>
+						name='topicName' class="form-control" id='topicName' required>
 						<option value=''>--select--</option>
 						<option>Session</option>
 						<option>Methods</option>
@@ -52,7 +52,7 @@
 				<div class="col-md-5 mb-3">
 					<label for="description"><h5>Description</h5></label>
 					<textarea rows="3" cols="40" class="form-control"
-						name="description" id="description"></textarea>
+						name="description" id="description" required></textarea>
 					<div name="desc" style="color: red"></div>
 				</div>
 			</div>
@@ -60,14 +60,14 @@
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
 					<label for="lastDate"><h5>Deadline</h5></label> <input type="Date"
-						class="form-control" id="lastDate" name="lastDate">
+						class="form-control" id="lastDate" name="lastDate" required>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
 					<label for="uploadType"><h5>Upload Type</h5></label> <select
-						name='uploadType' class="form-control" id='uploadType'>
+						name='uploadType' class="form-control" id='uploadType' required>
 						<option value=''>--select--</option>
 						<option>Git</option>
 						<option>Zip</option>

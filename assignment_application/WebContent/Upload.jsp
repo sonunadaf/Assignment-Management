@@ -13,9 +13,10 @@
 	<%@include file="Header.jsp"%>
 	<div class="container  middle-section">
 		<h5 align="center">Upload Assignment</h5>
-		<form action="uploadAssignment">
+		<form action="uploadAssignment" method="post"
+			enctype="multipart/form-data" onsubmit="return studentFilter()">
 			<div class="form-row">
-				<div class="col-md-3"></div>
+				<div class="col-md-3">${msg}</div>
 
 				<div class="col-md-5 mb-3">
 					<label for="emailId">Email</label> <input type="email"
@@ -27,16 +28,18 @@
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
-					<label for="pin">Assignment Pin</label> <input type="text"
-						class="form-control" id="pin" name="pin" placeholder="xxxxxx" required="required">
+					<label for="pin">Assignment Pin</label> <input type="number"
+						class="form-control" id="pin" name="pin" placeholder="xxxxxx"
+						required="required">
 					<div id="pinValid" style="color: red;"></div>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
-					<label for="uri">URI</label> <input type="url" class="form-control"
-						id="uri" name="uri" placeholder="uri">
+					<label for="gitUrl">GitHub URL</label> <input type="url"
+						class="form-control" id="gitUrl" name="gitUrl"
+						placeholder="GitHub URL">
 					<div id="uriValid" style="color: red;"></div>
 				</div>
 			</div>
@@ -48,8 +51,7 @@
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
 					<label for="file">File</label> <input type="file"
-						class="form-control" id="file" name="file"
-						placeholder="upload zip file only">
+						class="form-control" id="file" name="file" accept="/\.rar|\.tar.gz|\.zip/i">
 					<div id="fileValid" style="color: red;"></div>
 				</div>
 			</div>

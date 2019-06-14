@@ -48,7 +48,7 @@ public class SignInController {
 						if (getAdminFromDb.getFailLogin() < 3) {
 							signInService.updateFailLoginByZero(getAdminFromDb);
 							HttpSession session = request.getSession(true);
-							// session.setMaxInactiveInterval(60);
+							session.setMaxInactiveInterval(60 * 10);
 							// session.invalidate();
 							session.setAttribute("admin", getAdminFromDb);
 							if (getAdminFromDb.isFirstLogin()) {
