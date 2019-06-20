@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xworkz.assignment.constants.EnumUtil;
+import com.xworkz.assignment.constants.EnumViews;
+import com.xworkz.assignment.constants.ExceptionConstant;
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.ControllerException;
 import com.xworkz.assignment.exception.ServiceException;
@@ -31,17 +33,15 @@ public class AssignController {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			return new ModelAndView(EnumUtil.Assign.toString());
+			return new ModelAndView(EnumViews.Assign.toString());
 		}
-		return new ModelAndView(EnumUtil.SignIn.toString());
+		return new ModelAndView(EnumViews.SignIn.toString());
 
 	}
 
 	@RequestMapping(value = "/assignToAll", method = RequestMethod.POST)
 	public ModelAndView onAssign(@RequestParam Integer pin, @RequestParam String assign, HttpServletRequest request)
 			throws ControllerException {
-		logger.info("Pin number " + pin);
-		logger.info("asssign number " + pin);
 		try {
 			HttpSession session = request.getSession(false);
 
@@ -49,17 +49,20 @@ public class AssignController {
 				AdminEntity admin = (AdminEntity) session.getAttribute("admin");
 				boolean status = assignService.assignService(pin, assign, admin);
 				if (status) {
-					return new ModelAndView(EnumUtil.Assign.toString(), "msg", "Assign successful");
+					return new ModelAndView(EnumViews.Assign.toString(), ViewMessageConstant.MSG,
+							ViewMessageConstant.ASSIGN_SUCCESSFUL);
 				} else {
-					return new ModelAndView(EnumUtil.Assign.toString(), "err", "Assignment Pin is incorrect");
+					return new ModelAndView(EnumViews.Assign.toString(), ViewMessageConstant.ERR,
+							ViewMessageConstant.INCORRECT_ASSIGNMENT_PIN);
 				}
 
 			}
 		} catch (ServiceException e) {
-			logger.error("exception from controller " + e.getMessage());
+			logger.error(
+					ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
 			throw new ControllerException(e.getMessage());
 		}
 
-		return new ModelAndView(EnumUtil.SignIn.toString());
+		return new ModelAndView(EnumViews.SignIn.toString());
 	}
 }

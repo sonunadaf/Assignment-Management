@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/header.css" />
 
-<title>Sign In</title>
+<title>Assignment Upload</title>
 </head>
 <body>
 	<%@include file="Header.jsp"%>
@@ -16,7 +16,7 @@
 		<form action="uploadAssignment" method="post"
 			enctype="multipart/form-data" onsubmit="return studentFilter()">
 			<div class="form-row">
-				<div class="col-md-3">${msg}</div>
+				<div class="col-md-3" style="color: red;">${msg}</div>
 
 				<div class="col-md-5 mb-3">
 					<label for="emailId">Email</label> <input type="email"
@@ -51,7 +51,8 @@
 				<div class="col-md-3"></div>
 				<div class="col-md-5 mb-3">
 					<label for="file">File</label> <input type="file"
-						class="form-control" id="file" name="file" accept="/\.rar|\.tar.gz|\.zip/i">
+						class="form-control" id="file" name="file"
+						accept="/\.rar|\.tar.gz|\.zip/i">
 					<div id="fileValid" style="color: red;"></div>
 				</div>
 			</div>

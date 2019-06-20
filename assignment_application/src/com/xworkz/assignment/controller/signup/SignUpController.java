@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xworkz.assignment.constants.EnumUtil;
+import com.xworkz.assignment.constants.EnumViews;
+import com.xworkz.assignment.constants.ExceptionConstant;
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.dto.signup.SignUpDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.entity.member.MemberEntity;
@@ -23,13 +25,12 @@ public class SignUpController {
 	private ISignUpService iSignUpService;
 
 	public SignUpController() {
-		System.out.println("created : " + this.getClass().getSimpleName());
 	}
 
 	@RequestMapping(value = "/adminSignUp", method = RequestMethod.GET)
 	public String onSignUp() {
 
-		return EnumUtil.SignUp.toString();
+		return EnumViews.SignUp.toString();
 	}
 
 	@RequestMapping(value = "/adminSignUp", method = RequestMethod.POST)
@@ -37,7 +38,6 @@ public class SignUpController {
 		String message = "";
 		AdminEntity adminEntity = null;
 		MemberEntity member = null;
-		System.out.println(signUpDTO);
 		try {
 			if (signUpDTO != null) {
 				adminEntity = iSignUpService.getAdminEntityByEmail(signUpDTO.getEmailId());
@@ -45,23 +45,27 @@ public class SignUpController {
 			}
 			if (member != null) {
 				if (signUpDTO.getFirstName().length() <= 3) {
-					return new ModelAndView(EnumUtil.SignUp.toString(), "message",
-							"First name must be more than 4 character");
+					return new ModelAndView(EnumViews.SignUp.toString(), ViewMessageConstant.MESSAGE,
+							ViewMessageConstant.FIRST_NAME_LENGTH);
 				} else if (signUpDTO.getPhoneNo().length() != 10) {
-					return new ModelAndView(EnumUtil.SignUp.toString(), "message", "Mobile Number must be 10 digit");
+					return new ModelAndView(EnumViews.SignUp.toString(), ViewMessageConstant.MESSAGE,
+							ViewMessageConstant.MOBILE_NO_LENGTH);
 				} else if (adminEntity != null) {
-					return new ModelAndView(EnumUtil.SignUp.toString(), "message", "Email already Exist");
+					return new ModelAndView(EnumViews.SignUp.toString(), ViewMessageConstant.MESSAGE,
+							ViewMessageConstant.EMAIL_EXIST_MSG);
 				} else {
 					message = iSignUpService.signUp(signUpDTO);
 				}
 			} else {
-				return new ModelAndView(EnumUtil.SignUp.toString(), "membererror",
-						"You are not member of our team please contact to Assignment Management team");
+				return new ModelAndView(EnumViews.SignUp.toString(), ViewMessageConstant.MEMBER_ERROR,
+						ViewMessageConstant.MEMBER_MSG);
 			}
 		} catch (ServiceException e) {
-			System.err.println("Exception from controller" + e.getMessage());
-			throw new ControllerException("Exception from controller " + e.getMessage());
+			System.err.println(
+					ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
+			throw new ControllerException(
+					ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
 		}
-		return new ModelAndView("SignIn", "message", message);
+		return new ModelAndView(EnumViews.SignIn.toString(), ViewMessageConstant.MESSAGE, message);
 	}
 }

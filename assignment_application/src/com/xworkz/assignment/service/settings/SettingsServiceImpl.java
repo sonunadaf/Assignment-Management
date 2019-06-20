@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.dao.getadminentitybyemail.IGetAdminEntityByEmailDAO;
 import com.xworkz.assignment.dao.settings.ISettingsDAO;
 import com.xworkz.assignment.dto.settings.SettingsDTO;
@@ -86,15 +87,31 @@ public class SettingsServiceImpl implements ISettingsService {
 			}
 
 		} catch (DAOException e) {
-			logger.error("Exception from  SettingsServiceImpl " + e.getMessage());
-			throw new ServiceException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			logger.error("Exception from  SettingsServiceImpl " + e.getMessage());
-			throw new ServiceException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 
 		return update;
 
+	}
+
+	@Override
+	public AdminEntity getAdminByEmail(String email) throws ServiceException {
+		AdminEntity adminEntity = null;
+		try {
+			adminEntity = adminEntityByEmailDAO.getEntityByEmail(email);
+		} catch (DAOException e) {
+
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+		}
+		return adminEntity;
 	}
 
 }

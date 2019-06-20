@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity;
 import com.xworkz.assignment.exception.ControllerException;
@@ -26,17 +27,13 @@ public class SearchRestController {
 	public CreateAssignmentEntity search(@PathVariable Integer assignmentPin, HttpServletRequest request)
 			throws ControllerException {
 
-		System.err.println("Invoked Search rest Controller by id " + assignmentPin);
-
 		CreateAssignmentEntity assignmentEntity = null;
 		try {
 			HttpSession session = request.getSession(false);
-			if (session != null) {
-				AdminEntity admin = (AdminEntity) session.getAttribute("admin");
-				System.err.println("admin email from rest: " + admin.getEmailId());
+			if (session.getAttribute(ViewMessageConstant.SESSION_USER) != null) {
+				AdminEntity admin = (AdminEntity) session.getAttribute(ViewMessageConstant.SESSION_USER);
 
 				assignmentEntity = searchRestService.getCreatedAssignment(admin.getEmailId(), assignmentPin);
-				System.out.println(assignmentEntity);
 
 			}
 		} catch (ServiceException e) {

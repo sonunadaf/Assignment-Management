@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.dao.getadminentitybyemail.IGetAdminEntityByEmailDAO;
 import com.xworkz.assignment.dao.member.GetMemberByEmail;
 import com.xworkz.assignment.dao.signup.ISignUpDAO;
@@ -45,7 +47,7 @@ public class SignUpServiceImpl implements ISignUpService {
 	private static Logger logger = LoggerFactory.getLogger(SignUpServiceImpl.class);
 
 	public SignUpServiceImpl() {
-		System.out.println("created : " + this.getClass().getSimpleName());
+		logger.info("created : " + this.getClass().getSimpleName());
 	}
 
 	@Override
@@ -80,9 +82,10 @@ public class SignUpServiceImpl implements ISignUpService {
 				}
 			}
 		} catch (DAOException e) {
-			throw new ServiceException("Exception from Service " + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
-		return "Sign Up Succesful";
+		return ViewMessageConstant.SIGNUP_SUCCESS;
 	}
 
 	@Override
@@ -93,8 +96,10 @@ public class SignUpServiceImpl implements ISignUpService {
 			try {
 				adminEntity = getEntityByEmail.getEntityByEmail(email);
 			} catch (DAOException e) {
-				logger.error(e.getMessage());
-				throw new ServiceException(e.getMessage());
+				logger.error(
+						ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+				throw new ServiceException(
+						ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 			}
 		}
 		return adminEntity;
@@ -108,8 +113,10 @@ public class SignUpServiceImpl implements ISignUpService {
 			try {
 				memberEntity = getMemberByEmail.getMemberEntity(email);
 			} catch (DAOException e) {
-				logger.error(e.getMessage());
-				throw new ServiceException(e.getMessage());
+				logger.error(
+						ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+				throw new ServiceException(
+						ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 			}
 		}
 		return memberEntity;

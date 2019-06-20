@@ -10,6 +10,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.dao.createassignment.ICreateAssignmentDAO;
 import com.xworkz.assignment.dto.createassignment.CreateAssignmentDTO;
 import com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity;
@@ -28,14 +29,13 @@ public class CreateAssignentServiceImpl implements ICreateAssignentService {
 	private static Logger logger = LoggerFactory.getLogger(CreateAssignentServiceImpl.class);
 
 	public CreateAssignentServiceImpl() {
-		System.out.println("created : " + this.getClass().getSimpleName());
-		logger.info("Create By Logger : " + this.getClass().getSimpleName());
+
+		logger.info("Create : " + this.getClass().getSimpleName());
 	}
 
 	@Override
 	public String createAssignment(String email, CreateAssignmentDTO assignmentDTO) throws ServiceException {
-		System.out.println("emial from createAssignment : " + email);
-		System.out.println("AssignmentDTO from : " + assignmentDTO);
+
 		try {
 			if (assignmentDTO != null) {
 				CreateAssignmentEntity assignmentEntity = new CreateAssignmentEntity();
@@ -50,11 +50,13 @@ public class CreateAssignentServiceImpl implements ICreateAssignentService {
 				return id + "";
 			}
 		} catch (BeansException | DAOException e) {
-			logger.error(e.getMessage());
-			throw new ServiceException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new ServiceException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 		return null;
 	}

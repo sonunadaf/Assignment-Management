@@ -34,7 +34,7 @@ public class SearchAllDAOImpl implements ISearchAllDAO {
 			session = sessionFactory.openSession();
 			Query query = session.createQuery(hql);
 			query.setParameter("em", email);
-			assignmentList = query.list();
+			assignmentList =query.list();
 		} catch (HibernateException e) {
 			logger.error("exception from DAO : " + e.getMessage());
 			throw new DAOException(e.getMessage());

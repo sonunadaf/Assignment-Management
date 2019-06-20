@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xworkz.assignment.constants.EnumUtil;
+import com.xworkz.assignment.constants.EnumViews;
+import com.xworkz.assignment.constants.ExceptionConstant;
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.dto.createassignment.CreateAssignmentDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.ControllerException;
@@ -26,18 +28,18 @@ public class CreateAssignmentController {
 	private ICreateAssignentService iCreateAssignentService;
 	private static Logger logger = LoggerFactory.getLogger(CreateAssignmentController.class);
 
-	public CreateAssignmentController() {
-		System.out.println("created : " + this.getClass().getSimpleName());
+	public CreateAssignmentController() { 
 	}
 
 	@RequestMapping(value = "/createAssignment", method = RequestMethod.GET)
 	public ModelAndView onCreateAssignment(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		if (session != null) {
-			AdminEntity admin = (AdminEntity) session.getAttribute("admin");
-			return new ModelAndView(EnumUtil.CreateAssignment.toString()).addObject("admin", admin);
+		if (session.getAttribute(ViewMessageConstant.SESSION_USER) != null) {
+			AdminEntity admin = (AdminEntity) session.getAttribute(ViewMessageConstant.SESSION_USER);
+			return new ModelAndView(EnumViews.CreateAssignment.toString()).addObject(ViewMessageConstant.SESSION_USER,
+					admin);
 		}
-		return new ModelAndView(EnumUtil.SignIn.toString());
+		return new ModelAndView(EnumViews.SignIn.toString());
 	}
 
 	@RequestMapping(value = "/createAssignment", method = RequestMethod.POST)
@@ -45,22 +47,24 @@ public class CreateAssignmentController {
 			throws ControllerException {
 
 		HttpSession session = request.getSession(false);
-		if (session != null) {
+		if (session.getAttribute(ViewMessageConstant.SESSION_USER) != null) {
 			try {
-				AdminEntity adminEntity = (AdminEntity) session.getAttribute("admin");
+				AdminEntity adminEntity = (AdminEntity) session.getAttribute(ViewMessageConstant.SESSION_USER);
 				String assignmentId = iCreateAssignentService.createAssignment(adminEntity.getEmailId(),
 						createAssignmentDTO);
-				System.out.println("created id : " + assignmentId);
-				return new ModelAndView(EnumUtil.CreateAssignment.toString(), "assignmentId",
-						"Created Assignment id " + assignmentId);
+				return new ModelAndView(EnumViews.CreateAssignment.toString(), ViewMessageConstant.ASSIGNMENT_ID,
+						ViewMessageConstant.ASSIGNMENT_CREATED_MSG + assignmentId);
 			} catch (ServiceException e) {
-				logger.error(e.getMessage());
-				throw new ControllerException(e.getMessage());
+				logger.error(
+						ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
+				throw new ControllerException(
+						ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
 			} catch (Exception e) {
-				throw new ControllerException(e.getMessage());
+				throw new ControllerException(
+						ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
 			}
 		} else {
-			return new ModelAndView(EnumUtil.SignIn.toString());
+			return new ModelAndView(EnumViews.SignIn.toString());
 		}
 	}
 

@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.dao.changepassword.IChangePasswordDAO;
 import com.xworkz.assignment.dao.getadminentitybyemail.IGetAdminEntityByEmailDAO;
 import com.xworkz.assignment.dto.changepassword.ChangePasswordDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.DAOException;
+import com.xworkz.assignment.exception.ServiceException;
 import com.xworkz.assignment.mailsender.changepassword.ChangePasswordMailSend;
 
 @Service
@@ -28,7 +30,7 @@ public class ChangePasswordServiceImpl implements IChangePasswordService {
 	}
 
 	@Override
-	public boolean changePassword(ChangePasswordDTO changePasswordDTO) {
+	public boolean changePassword(ChangePasswordDTO changePasswordDTO) throws ServiceException {
 		System.out.println("invoked changePassword from " + this.getClass().getSimpleName());
 		try {
 			String email = changePasswordDTO.getUserName();
@@ -44,14 +46,20 @@ public class ChangePasswordServiceImpl implements IChangePasswordService {
 					adminEntity.setFirstLogin(false);
 					boolean result = changePasswordDAO.changePassword(adminEntity);
 					if (result) {
-						changePasswordMailSend.createAssignmentMailSend(email, newPass);
+						try {
+							changePasswordMailSend.createAssignmentMailSend(email, newPass);
+						} catch (ServiceException e) {
+							throw new ServiceException(ExceptionConstant.EXCEPTION_FROM_SERVICE
+									+ this.getClass().getSimpleName() + e.getMessage());
+						}
 					}
 					return result;
 				}
 			}
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 		return false;
 

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.dao.getcreateassignmentbypin.GetCreateAssignmentByPinDAO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity;
@@ -30,16 +31,18 @@ public class AssignServiceImpl implements AssignService {
 				CreateAssignmentEntity createAssignmentFromdb = getCreateAssignment.getCreateAssignmentEntity(pin);
 				if (createAssignmentFromdb != null) {
 					assignToStudent.sendMail(assignList, createAssignmentFromdb);
-				}else {
+				} else {
 					return false;
 				}
 			}
 		} catch (DAOException e) {
-			logger.error(e.getMessage());
-			throw new ServiceException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new ServiceException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 		return true;
 	}

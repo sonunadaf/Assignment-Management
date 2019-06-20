@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.dto.studentupload.UploadStudentAssignmentDTO;
 import com.xworkz.assignment.entity.upload.UploadStudentAssignmentEntity;
 import com.xworkz.assignment.exception.DAOException;
@@ -35,26 +38,30 @@ public class UploadAssignmentStudentDAOImpl implements UploadAssignmentStudentDA
 		BufferedOutputStream outputStream = null;
 		try {
 			MultipartFile file = studentAssignmentDTO.getFile();
-			fileUrl = "G:/assignmentUploadfile/"
-					+ new SimpleDateFormat("yyyy.mm.dd.HH.MM.SS").format(new Date()).toString()
+			fileUrl = ViewMessageConstant.FILE_URL
+					+ new SimpleDateFormat(ViewMessageConstant.DATE_FORMAT).format(new Date()).toString()
 					+ studentAssignmentDTO.getEmailId() + ".zip";
 			byte[] bytes = file.getBytes();
 			outputStream = new BufferedOutputStream(new FileOutputStream(new File(fileUrl)));
 
 			outputStream.write(bytes);
 		} catch (IOException e) {
-			logger.error("exception from UploadAssignmentStudentDAOImpl " + e.getMessage());
-			throw new DAOException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			logger.error("exception from UploadAssignmentStudentDAOImpl " + e.getMessage());
-			throw new DAOException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} finally {
 			if (outputStream != null) {
 				try {
 					outputStream.close();
 				} catch (IOException e) {
-					logger.error("exception from UploadAssignmentStudentDAOImpl " + e.getMessage());
-					throw new DAOException(e.getMessage());
+					logger.error(
+							ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+					throw new DAOException(
+							ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 				}
 			}
 		}
@@ -76,13 +83,40 @@ public class UploadAssignmentStudentDAOImpl implements UploadAssignmentStudentDA
 			}
 			transaction.commit();
 		} catch (HibernateException e) {
-			logger.error("exception from UploadAssignmentStudentDAOImpl " + e.getMessage());
-			throw new DAOException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			logger.error("exception from UploadAssignmentStudentDAOImpl " + e.getMessage());
-			throw new DAOException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		}
 
 		return status;
+	}
+
+	@Override
+	public boolean isStudentExist(Integer pin, String email) throws DAOException {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			String hql = "select up from UploadStudentAssignmentEntity up where up.pin=:pn and up.emailId=:em";
+			Query query = session.createQuery(hql);
+			query.setParameter("pn", pin);
+			query.setParameter("em", email);
+			Object list = query.uniqueResult();
+			if (list != null) {
+				return true;
+			}
+		} catch (HibernateException e) {
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+		} catch (Exception e) {
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+		}
+		return false;
 	}
 }

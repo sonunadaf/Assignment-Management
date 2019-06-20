@@ -7,11 +7,12 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.DAOException;
 
 @Repository
-public class SignUpDAO implements ISignUpDAO {
+public class SignUpDAOImpl implements ISignUpDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -29,10 +30,12 @@ public class SignUpDAO implements ISignUpDAO {
 			return id;
 		} catch (HibernateException e) {
 			transaction.rollback();
-			throw new DAOException("Exception from DAO " + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
 			transaction.rollback();
-			throw new DAOException("Exception from DAO " + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} finally {
 			session.close();
 		}

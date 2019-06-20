@@ -1,4 +1,6 @@
-package com.xworkz.assignment.dao.member;
+package com.xworkz.assignment.dao.getsolvedassignment;
+
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -10,36 +12,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.xworkz.assignment.constants.ExceptionConstant;
-import com.xworkz.assignment.entity.member.MemberEntity;
 import com.xworkz.assignment.exception.DAOException;
 
 @Repository
-public class GetMemberByEmail {
+public class GetSolvedAssignmentByPinDAOImpl implements GetSolvedAssignmentByPinDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	private static Logger logger = LoggerFactory.getLogger(GetMemberByEmail.class);
 
-	public MemberEntity getMemberEntity(String email) throws DAOException {
+	private static Logger logger = LoggerFactory.getLogger(GetSolvedAssignmentByPinDAOImpl.class);
 
+	@Override
+	public List<?> getSolvedAssignmentbyPin(String email) throws DAOException {
+		String hql = "select stupload from UploadStudentAssignmentEntity stupload"
+				+ " where stupload.pin IN(select crst.assignmentId from CreateAssignmentEntity crst where crst.email=:em)";
 		Session session = null;
-		MemberEntity memberEntity = null;
+		List list = null;
 		try {
-			String hql = "select memb from MemberEntity memb where memb.email=:em";
 			session = sessionFactory.openSession();
 			Query query = session.createQuery(hql);
 			query.setParameter("em", email);
-			memberEntity = (MemberEntity) query.uniqueResult();
+			list = query.list();
 		} catch (HibernateException e) {
 			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 			throw new DAOException(
 					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
-		} catch (Exception e) {
-			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
-			throw new DAOException(
-					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		}
-		return memberEntity;
+
+		return list;
 	}
 
 }

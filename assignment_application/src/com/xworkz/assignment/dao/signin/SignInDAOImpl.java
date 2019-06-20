@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.DAOException;
 
@@ -39,10 +40,12 @@ public class SignInDAOImpl implements ISignInDAO {
 			}
 		} catch (HibernateException e) {
 			transaction.rollback();
-			throw new DAOException(e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
 			transaction.rollback();
-			throw new DAOException(e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		}
 	}
 
@@ -60,10 +63,12 @@ public class SignInDAOImpl implements ISignInDAO {
 			}
 		} catch (HibernateException e) {
 			transaction.rollback();
-			throw new DAOException(e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
 			transaction.rollback();
-			throw new DAOException(e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		}
 
 	}

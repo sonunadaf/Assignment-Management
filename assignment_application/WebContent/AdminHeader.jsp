@@ -28,12 +28,13 @@
 					Assignment</a> <a href="assignToAll" class="btn btn-success">Assign</a>
 				<a href="serarchData" class="btn btn-success">Search</a> <a
 					href="adminSettings" class="btn btn-success">Settings</a>
+
 			</div>
 			<div class="col-md-3">
 				<a class=" float-right" style="color: white;">Last Sign In :
-					${admin.lastLogin}</a><br></br> <a href="#"
-					class="btn btn-info float-right"> ${admin.firstName}
-					${admin.lastName}</a>
+					${admin.lastLogin}</a><br></br>
+				<h4 style="color: white; text-align: right">${admin.firstName}
+					${admin.lastName}</h4>
 			</div>
 			<div class="col-md-1" style="color: white;">
 				<br></br>

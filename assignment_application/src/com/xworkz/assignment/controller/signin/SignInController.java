@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xworkz.assignment.constants.EnumUtil;
+import com.xworkz.assignment.constants.EnumViews;
+import com.xworkz.assignment.constants.ExceptionConstant;
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.dto.signin.SignInDTO;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.ControllerException;
@@ -25,21 +27,19 @@ public class SignInController {
 	private ISignInService signInService;
 
 	public SignInController() {
-		System.out.println("created : " + this.getClass().getSimpleName());
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String signIn() {
-		return EnumUtil.SignIn.toString();
+		return EnumViews.SignIn.toString();
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView signIn(SignInDTO signInDTO, HttpServletRequest request)
 			throws DAOException, ControllerException {
 
-		System.out.println("invoked signin from controller " + signInDTO);
 		if (signInDTO != null) {
-			AdminEntity getAdminFromDb;
+			AdminEntity getAdminFromDb; 
 			try {
 				getAdminFromDb = signInService.signIn(signInDTO);
 
@@ -49,35 +49,38 @@ public class SignInController {
 							signInService.updateFailLoginByZero(getAdminFromDb);
 							HttpSession session = request.getSession(true);
 							session.setMaxInactiveInterval(60 * 10);
-							// session.invalidate();
-							session.setAttribute("admin", getAdminFromDb);
+							session.setAttribute(ViewMessageConstant.SESSION_USER, getAdminFromDb);
 							if (getAdminFromDb.isFirstLogin()) {
-								return new ModelAndView(EnumUtil.ChangePassword.toString(), "message",
-										"Signin successful");
+								return new ModelAndView(EnumViews.ChangePassword.toString(),
+										ViewMessageConstant.MESSAGE, ViewMessageConstant.SIGNIN_SUCCESS);
 							} else {
-								// implementation is incomplete
-								return new ModelAndView(EnumUtil.CreateAssignment.toString());
+								return new ModelAndView(EnumViews.CreateAssignment.toString());
 							}
 						} else {
-							return new ModelAndView(EnumUtil.SignIn.toString(), "message",
-									"You have have entered 3 time's wrong password,  please contact Assignment Mannagement Customer Care");
+							return new ModelAndView(EnumViews.SignIn.toString(), ViewMessageConstant.MESSAGE,
+									ViewMessageConstant.WRONG_PASSWORD_3_TIMES);
 						}
 
 					} else {
 						signInService.updateFailLogin(getAdminFromDb);
-						return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user password");
+						return new ModelAndView(EnumViews.SignIn.toString(), ViewMessageConstant.MESSAGE,
+								ViewMessageConstant.INCORRECT_PASSWORD);
 					}
 				} else {
-					return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user name");
+					return new ModelAndView(EnumViews.SignIn.toString(), ViewMessageConstant.MESSAGE,
+							ViewMessageConstant.INCORRECT_USER_NAME);
 				}
 			} catch (ServiceException e) {
-				throw new ControllerException(e.getMessage());
+				throw new ControllerException(
+						ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
 			} catch (Exception e) {
-				throw new ControllerException(e.getMessage());
+				throw new ControllerException(
+						ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
 			}
 		} else {
 
-			return new ModelAndView(EnumUtil.SignIn.toString(), "message", "incorrect user name");
+			return new ModelAndView(EnumViews.SignIn.toString(), ViewMessageConstant.MESSAGE,
+					ViewMessageConstant.INCORRECT_USER_NAME);
 		}
 
 	}

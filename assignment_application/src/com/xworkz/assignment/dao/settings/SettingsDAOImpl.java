@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.entity.settings.SettingsEntity;
 import com.xworkz.assignment.exception.DAOException;
@@ -34,12 +35,12 @@ public class SettingsDAOImpl implements ISettingsDAO {
 		} catch (HibernateException e) {
 			transaction.rollback();
 			e.printStackTrace();
-			logger.error("exception from SettingsDAOImpl : " + e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 			throw new DAOException(e.getMessage());
 		} catch (Exception e) {
 			transaction.rollback();
 			e.printStackTrace();
-			logger.error("exception from SettingsDAOImpl : " + e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 			throw new DAOException(e.getMessage());
 		} finally {
 			session.close();
@@ -60,11 +61,15 @@ public class SettingsDAOImpl implements ISettingsDAO {
 		} catch (HibernateException e) {
 			transaction.rollback();
 			e.printStackTrace();
-			throw new DAOException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
 			transaction.rollback();
-			e.printStackTrace();
-			throw new DAOException(e.getMessage());
+
+			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} finally {
 			session.close();
 		}

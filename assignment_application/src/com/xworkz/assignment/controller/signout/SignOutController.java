@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xworkz.assignment.constants.EnumUtil;
+import com.xworkz.assignment.constants.EnumViews;
+import com.xworkz.assignment.constants.ExceptionConstant;
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.exception.ControllerException;
 
 @Controller
@@ -27,17 +29,17 @@ public class SignOutController {
 
 		try {
 			HttpSession session = request.getSession(false);
-			if (session != null) {
+			if (session.getAttribute(ViewMessageConstant.SESSION_USER) != null) {
 				session.invalidate();
-				session = null;
-				return new ModelAndView(EnumUtil.SignIn.toString());
+				return new ModelAndView(EnumViews.SignIn.toString());
 			}
 		} catch (Exception e) {
-			logger.error("Exception from Sign out Controller " + e.getMessage());
-			e.printStackTrace();
-			throw new ControllerException(e.getMessage());
+			logger.error(
+					ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
+			throw new ControllerException(
+					ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
 		}
-		return new ModelAndView(EnumUtil.SignIn.toString());
+		return new ModelAndView(EnumViews.SignIn.toString());
 	}
 
 }

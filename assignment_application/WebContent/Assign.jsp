@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="assets/header-second-bar.css">
 <link href='http://fonts.googleapis.com/css?family=Cookie'
 	rel='stylesheet' type='text/css'>
-<title>Search</title>
+<title>Assign</title>
 
 </head>
 <body>
@@ -30,7 +30,7 @@
 					<label for="pin">Pin</label><input type="number"
 						class="form-control" id="pin" name="pin" placeholder="enter pin"
 						required> <a id="validate" style="color: red;"></a> <label
-						for="assign">Assign</label>
+						for="assign">Assignee</label>
 					<textarea rows="4" cols="80" class="form-control" id="assign"
 						name="assign" placeholder="enter coma saperated valid email id"
 						required="S"></textarea>

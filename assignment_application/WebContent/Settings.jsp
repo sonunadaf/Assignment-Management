@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="assets/header-second-bar.css">
 <link href='http://fonts.googleapis.com/css?family=Cookie'
 	rel='stylesheet' type='text/css'>
-<title>Update Password</title>
+<title>Update Details</title>
 
 </head>
 <body>
@@ -19,12 +19,12 @@
 		<form action="adminSettings" method="post"
 			onsubmit="return updateInformation()">
 			<div class="form-row">
-				<div class="col-md-3">${message}</div>
+				<div class="col-md-3" id="updateMessage">${message}</div>
 
 				<div class="col-md-5 mb-3">
 					<label for="firstName">First Name</label> <input type="text"
 						class="form-control" id="firstName" name="firstName"
-						placeholder="First Name">
+						placeholder="First Name" value='${admin.firstName}'>
 					<div id="fValid" style="color: red;"></div>
 				</div>
 			</div>
@@ -34,7 +34,7 @@
 				<div class="col-md-5 mb-3">
 					<label for="lastName">Last Name</label> <input type="text"
 						class="form-control" id="lastName" name="lastName"
-						placeholder="Last Name">
+						value='${admin.lastName}' placeholder="Last Name">
 					<div id="lValid" style="color: red;"></div>
 				</div>
 			</div>
@@ -52,7 +52,7 @@
 				<div class="col-md-5 mb-3">
 					<label for="phoneNUmber">Phone Number</label> <input type="text"
 						class="form-control" id="phoneNUmber" name="phoneNUmber"
-						placeholder="96385XXXXX">
+						value='${admin.contactNumber}' placeholder="96385XXXXX">
 					<div id="pValid" style="color: red;"></div>
 				</div>
 			</div>

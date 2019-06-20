@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.DAOException;
 
@@ -29,9 +30,11 @@ public class GetAdminEntityByEmailDAOImpl implements IGetAdminEntityByEmailDAO {
 				return (AdminEntity) adminEntity;
 			}
 		} catch (HibernateException e) {
-			throw new DAOException(e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			throw new DAOException(e.getMessage());
+			throw new DAOException(
+					ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
 		} finally {
 			session.close();
 		}

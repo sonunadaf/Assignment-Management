@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.dao.getadminentitybyemail.IGetAdminEntityByEmailDAO;
 import com.xworkz.assignment.dao.signin.ISignInDAO;
 import com.xworkz.assignment.dto.signin.SignInDTO;
@@ -25,7 +26,7 @@ public class SignInServiceImpl implements ISignInService {
 	private ISignInDAO signInDAO;
 
 	public SignInServiceImpl() {
-		System.out.println("created : " + this.getClass().getSimpleName());
+
 	}
 
 	@Override
@@ -33,8 +34,6 @@ public class SignInServiceImpl implements ISignInService {
 
 		String userid = signInDTO.getUser();
 		String password = signInDTO.getPassword();
-		System.out.println("SignIn method invoked from " + this.getClass().getSimpleName());
-		System.out.println(userid + " " + password);
 		AdminEntity getAdminFromDb = null;
 
 		try {
@@ -44,17 +43,17 @@ public class SignInServiceImpl implements ISignInService {
 				if (getAdminFromDb != null) {
 
 					boolean matched = passwordEncoder.matches(password, getAdminFromDb.getPassword());
-					System.out.println("password matching : " + matched);
 					if (matched) {
 						getAdminFromDb.setPassword(password);
-						System.out.println("Sign In From service invoked " + getAdminFromDb.getPassword());
 					}
 				}
 			}
 		} catch (DAOException e) {
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 		return getAdminFromDb;
 	}
@@ -66,9 +65,11 @@ public class SignInServiceImpl implements ISignInService {
 			adminEntity = adminDAO.getEntityByEmail(getAdminFromDb.getEmailId());
 			signInDAO.updateFailSignIn(adminEntity);
 		} catch (DAOException e) {
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 	}
 
@@ -84,9 +85,11 @@ public class SignInServiceImpl implements ISignInService {
 			}
 			signInDAO.updateFailLoginByZero(adminEntity);
 		} catch (DAOException e) {
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 	}
 

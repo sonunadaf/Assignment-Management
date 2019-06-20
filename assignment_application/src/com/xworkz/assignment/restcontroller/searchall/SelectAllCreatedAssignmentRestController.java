@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity;
 import com.xworkz.assignment.exception.ControllerException;
@@ -24,13 +25,12 @@ public class SelectAllCreatedAssignmentRestController {
 	@GetMapping(value = "/searchAll")
 	public List<CreateAssignmentEntity> getAllSearch(HttpServletRequest request) throws ControllerException {
 		List<CreateAssignmentEntity> list = null;
-		System.err.println("invoked search all");
 		try {
 			HttpSession session = request.getSession();
-			if (session != null) {
-				AdminEntity admin = (AdminEntity) session.getAttribute("admin");
+			if (session.getAttribute(ViewMessageConstant.SESSION_USER) != null) {
+				AdminEntity admin = (AdminEntity) session.getAttribute(ViewMessageConstant.SESSION_USER);
 				list = allServiceRestController.getAllAssignmentEntities(admin.getEmailId());
-				System.err.println("returning list " + list);
+
 			}
 		} catch (ServiceException e) {
 			throw new ControllerException(e.getMessage());

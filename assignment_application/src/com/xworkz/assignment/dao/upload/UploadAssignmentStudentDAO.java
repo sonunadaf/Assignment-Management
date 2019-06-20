@@ -8,4 +8,6 @@ public interface UploadAssignmentStudentDAO {
 	public String saveFile(UploadStudentAssignmentDTO studentAssignmentDTO) throws DAOException;
 
 	public boolean saveStudentUpload(UploadStudentAssignmentEntity studentAssignmentEntity) throws DAOException;
+
+	public boolean isStudentExist(Integer pin, String email) throws DAOException;
 }

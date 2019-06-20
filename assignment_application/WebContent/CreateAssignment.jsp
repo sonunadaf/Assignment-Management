@@ -8,11 +8,12 @@
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/header.css" />
 
-<%@include file="AdminHeader.jsp"%>
 </head>
 
 <body>
-	<div class="container  admin-section">
+
+	<%@include file="AdminHeader.jsp"%>
+	<div class="container admin-section">
 		<h5 align="center">Create Assignment</h5>
 		<h3 align="center" style="color: green;'">${assignmentId}</h3>
 

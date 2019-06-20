@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xworkz.assignment.constants.EnumUtil;
+import com.xworkz.assignment.constants.EnumViews;
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.entity.admin.AdminEntity;
 import com.xworkz.assignment.exception.ControllerException;
 
@@ -20,15 +21,15 @@ public class SearchController {
 	public ModelAndView search(HttpServletRequest request) throws ControllerException {
 		try {
 			HttpSession session = request.getSession(false);
-			if (session != null) {
-				AdminEntity admin = (AdminEntity) session.getAttribute("admin");
-				return new ModelAndView(EnumUtil.Search.toString()).addObject("admin", admin);
+			if (session.getAttribute(ViewMessageConstant.SESSION_USER) != null) { 
+				AdminEntity admin = (AdminEntity) session.getAttribute(ViewMessageConstant.SESSION_USER);
+				return new ModelAndView(EnumViews.Search.toString()).addObject(ViewMessageConstant.SESSION_USER, admin);
 			}
 		} catch (Exception e) {
 			throw new ControllerException(e.getMessage());
 		}
 
-		return new ModelAndView(EnumUtil.SignIn.toString());
+		return new ModelAndView(EnumViews.SignIn.toString());
 	}
 
 }

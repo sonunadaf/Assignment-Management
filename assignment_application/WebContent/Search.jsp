@@ -27,7 +27,8 @@
 			<div class="col-md-2">
 				<input type="button"
 					class="btn btn-info float-right btn-lg btn-block" value="View All"
-					onclick="insertData()"></input>
+					onclick="insertData()"></input> <a href="AssignmetUpload.jsp"
+					class="btn btn-info float-right btn-lg btn-block" value="Upload">Solved</a>
 			</div>
 		</div>
 		<div class="row">
@@ -35,6 +36,7 @@
 			<div class="col-md-2">
 				<input type="button" class="btn btn-info btn-lg btn-block"
 					value="Search" onclick="searchData()"></input>
+
 			</div>
 			<div class="col-md-2">
 				<a class="btn btn-info btn-lg btn-block" href="CreateAssignment.jsp"
@@ -43,6 +45,7 @@
 		</div>
 		<br></br>
 		<div class="row"></div>
+
 		<form name="f1">
 			<table class="table table-striped" name="t1">
 				<tr name="r1">
@@ -50,24 +53,16 @@
 					<th name="h2">COURSE NAME</th>
 					<th name="h3">TOPIC NAME</th>
 					<th name="h4">DESCRIPTION</th>
-					<th name="h5">LAST DATE</th>
-					<th name="h6">UPLOAD TYPE</th>
-					<th name="h7">TOTAL UPLOAD</th>
-				</tr>
-				<tr name="r2">
-					<td><div id="assig"></div></td>
-					<td><div id="course"></div></td>
-					<td><div id="topic"></div></td>
-					<td><div id="desc"></div></td>
-					<td><div id="ldate"></div></td>
-					<td><div id="utype"></div></td>
-					<td><div id="scount"></div></td>
+					<th name="h5">ASSIGNED DATE</th>
+					<th name="h6">LAST DATE</th>
+					<th name="h7">UPLOAD TYPE</th>
 				</tr>
 			</table>
 		</form>
 	</div>
 	</div>
 	<%@include file="Footer.jsp"%>
+
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/inputvalidation.js"></script>

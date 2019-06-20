@@ -8,7 +8,10 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import com.xworkz.assignment.constants.EmailConstant;
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.entity.createassignment.CreateAssignmentEntity;
+import com.xworkz.assignment.exception.ServiceException;
 
 @Service
 public class AssignToStudent {
@@ -21,27 +24,27 @@ public class AssignToStudent {
 		logger.info("created : " + this.getClass().getSimpleName());
 	}
 
-	public void sendMail(String[] emailList, CreateAssignmentEntity createAssignmentEntity) {
-		logger.info("mail sent method  invoked");
+	public void sendMail(String[] emailList, CreateAssignmentEntity createAssignmentEntity) throws ServiceException {
 		try {
-			String sendText = "Dear Students \n              You have Assigned assignment check and upload before time line \n \n"
-					+ "              Assign Id    : " + createAssignmentEntity.getAssignmentId() + "\n"
-					+ "              Course Name  : " + createAssignmentEntity.getCourseName() + "\n"
-					+ "              Topic Name   : " + createAssignmentEntity.getTopicName() + "\n"
-					+ "              Description  : " + createAssignmentEntity.getTopicName() + "\n"
-					+ "              Last Date    : " + createAssignmentEntity.getLastDate();
+			String sendText = EmailConstant.SEND_TO_STUDENT + EmailConstant.ASSIGN_ID
+					+ createAssignmentEntity.getAssignmentId() + EmailConstant.COURSE_NAME
+					+ createAssignmentEntity.getCourseName() + EmailConstant.TOPIC_NAME
+					+ createAssignmentEntity.getTopicName() + EmailConstant.DESCRIPTION
+					+ createAssignmentEntity.getTopicName() + EmailConstant.LAST_DATE
+					+ createAssignmentEntity.getLastDate();
 			for (String emst : emailList) {
 				SimpleMailMessage mailMessage = new SimpleMailMessage();
 				mailMessage.setTo(emst);
-				mailMessage.setSubject("Assignment Management (Todays task)");
+				mailMessage.setSubject(EmailConstant.SUBJECT);
 				mailMessage.setText(sendText);
 				mailSender.send(mailMessage);
-				logger.info("mail sent successful");
+				logger.info(EmailConstant.MAIL_SUCCESSFUL);
 
 			}
 		} catch (MailException e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 
 	}

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.xworkz.assignment.constants.ExceptionConstant;
 import com.xworkz.assignment.dao.getcreatedassignmentbypin.GetCreatedAssignmentByPin;
 import com.xworkz.assignment.dao.upload.UploadAssignmentStudentDAO;
 import com.xworkz.assignment.dto.studentupload.UploadStudentAssignmentDTO;
@@ -52,19 +53,21 @@ public class UploadStudentAssignmentServiceImpl implements UploadStudentAssignme
 			}
 
 		} catch (Exception e) {
-			logger.error("Exception from UploadStudentAssignmentServiceImpl" + e.getMessage());
-			throw new ServiceException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 
 		return status;
 	}
 
 	@Override
-	public boolean isAssignmentPinAvailable(Integer pin) throws ServiceException {
+	public boolean isAssignmentPinAvailable(Integer pin, String email) throws ServiceException {
 		try {
 			if (pin != null) {
 
-				CreateAssignmentEntity createAssignmentEntity = getCreatedAssignmentByPin.getCreatedAssignment(pin);
+				CreateAssignmentEntity createAssignmentEntity = getCreatedAssignmentByPin.getCreatedAssignment(pin,
+						email);
 				if (createAssignmentEntity != null) {
 
 					return true;
@@ -74,11 +77,33 @@ public class UploadStudentAssignmentServiceImpl implements UploadStudentAssignme
 
 			}
 		} catch (DAOException e) {
-			logger.error("Exception from UploadStudentAssignmentServiceImpl" + e.getMessage());
-			throw new ServiceException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		} catch (Exception e) {
-			logger.error("Exception from UploadStudentAssignmentServiceImpl" + e.getMessage());
-			throw new ServiceException(e.getMessage());
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+		}
+		return true;
+	}
+
+	@Override
+	public boolean isStudentUploaded(Integer pin, String email) throws ServiceException {
+		try {
+			boolean status = assignmentStudentDAO.isStudentExist(pin, email);
+			if (status) {
+				return true;
+			}
+
+		} catch (DAOException e) {
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+		} catch (Exception e) {
+			logger.error(ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
+			throw new ServiceException(
+					ExceptionConstant.EXCEPTION_FROM_SERVICE + this.getClass().getSimpleName() + e.getMessage());
 		}
 		return false;
 	}

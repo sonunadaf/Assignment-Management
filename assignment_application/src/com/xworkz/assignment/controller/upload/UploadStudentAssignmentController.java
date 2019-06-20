@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xworkz.assignment.constants.EnumUtil;
+import com.xworkz.assignment.constants.EnumViews;
+import com.xworkz.assignment.constants.ExceptionConstant;
+import com.xworkz.assignment.constants.ViewMessageConstant;
 import com.xworkz.assignment.dto.studentupload.UploadStudentAssignmentDTO;
 import com.xworkz.assignment.exception.ControllerException;
 import com.xworkz.assignment.exception.ServiceException;
@@ -24,34 +26,52 @@ public class UploadStudentAssignmentController {
 	private UploadStudentAssignmentService uploadStudent;
 	private static Logger logger = LoggerFactory.getLogger(UploadStudentAssignmentController.class);
 
+	public UploadStudentAssignmentController() {
+
+	}
+
 	@RequestMapping(value = "/uploadAssignment", method = RequestMethod.POST)
 	public ModelAndView uploadAssignment(UploadStudentAssignmentDTO studentAssignmentDTO, HttpServletRequest request)
 			throws ControllerException {
 		try {
 			if (studentAssignmentDTO != null) {
 
-				boolean pinstatus = uploadStudent.isAssignmentPinAvailable(studentAssignmentDTO.getPin());
+				boolean pinstatus = uploadStudent.isAssignmentPinAvailable(studentAssignmentDTO.getPin(),
+						studentAssignmentDTO.getEmailId());
 				if (pinstatus) {
-					uploadStudent.uploadAssignment(studentAssignmentDTO, request.getRemoteAddr());
-					System.err.println(studentAssignmentDTO);
-					return new ModelAndView(EnumUtil.Upload.toString(), "msg", "upload successful");
+					boolean uploadStstus = uploadStudent.isStudentUploaded(studentAssignmentDTO.getPin(),
+							studentAssignmentDTO.getEmailId());
+					if (!uploadStstus) {
+						uploadStudent.uploadAssignment(studentAssignmentDTO, request.getRemoteAddr());
+						return new ModelAndView(EnumViews.Upload.toString(), ViewMessageConstant.MSG,
+								ViewMessageConstant.UPLOAD_SUCCESSFUL);
+					} else {
+						return new ModelAndView(EnumViews.Upload.toString(), ViewMessageConstant.MSG,
+								ViewMessageConstant.ALREADY_UPLOADED);
+					}
+
 				} else {
-					return new ModelAndView(EnumUtil.Upload.toString(), "msg", "Enter a valid pin");
+					return new ModelAndView(EnumViews.Upload.toString(), ViewMessageConstant.MSG,
+							ViewMessageConstant.INCORRECT_ASSIGNMENT_PIN);
 				}
 
 			}
 		} catch (
 
 		ServiceException e) {
-			logger.error("Exception from UploadStudentAssignmentController" + e.getMessage());
-			throw new ControllerException(e.getMessage());
+			logger.error(
+					ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
+			throw new ControllerException(
+					ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
 
 		} catch (Exception e) {
-			logger.error("Exception from UploadStudentAssignmentController" + e.getMessage());
-			throw new ControllerException(e.getMessage());
+			logger.error(
+					ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
+			throw new ControllerException(
+					ExceptionConstant.EXCEPTION_FROM_CONTROLLER + this.getClass().getSimpleName() + e.getMessage());
 
 		}
-		return new ModelAndView(EnumUtil.Upload.toString());
+		return new ModelAndView(EnumViews.Upload.toString());
 	}
 
 }
