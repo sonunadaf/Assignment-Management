@@ -43,7 +43,6 @@ public class UploadAssignmentStudentDAOImpl implements UploadAssignmentStudentDA
 					+ studentAssignmentDTO.getEmailId() + ".zip";
 			byte[] bytes = file.getBytes();
 			outputStream = new BufferedOutputStream(new FileOutputStream(new File(fileUrl)));
-
 			outputStream.write(bytes);
 		} catch (IOException e) {
 			logger.error(ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
@@ -57,6 +56,7 @@ public class UploadAssignmentStudentDAOImpl implements UploadAssignmentStudentDA
 			if (outputStream != null) {
 				try {
 					outputStream.close();
+					outputStream.flush();
 				} catch (IOException e) {
 					logger.error(
 							ExceptionConstant.EXCEPTION_FROM_DAO + this.getClass().getSimpleName() + e.getMessage());
