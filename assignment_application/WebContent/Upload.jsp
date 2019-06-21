@@ -52,7 +52,7 @@
 				<div class="col-md-5 mb-3">
 					<label for="file">File</label> <input type="file"
 						class="form-control" id="file" name="file"
-						accept="/\.rar|\.tar.gz|\.zip/i">
+						accept="/\.rar|\.zip/i">
 					<div id="fileValid" style="color: red;"></div>
 				</div>
 			</div>

@@ -19,29 +19,24 @@
 	<context:component-scan
 		base-package="com.xworkz.assignment"></context:component-scan>
 
-	<bean id="validationProp"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location"
-			value="classpath:resources/properties/validation.properties"></property>
-	</bean>
 	<bean id="mailSenderImpl"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com"></property>
-		<property name="port" value="587"></property>
-		<property name="username" value="sonunadaf88@gmail.com"></property>
-		<property name="password" value="sonu@123"></property>
+		<property name="host" value="${email.host}"></property>
+		<property name="port" value="${email.port}"></property>
+		<property name="username" value="${email.username}"></property>
+		<property name="password" value="${email.password}"></property>
 		<property name="javaMailProperties">
 			<props>
-				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.ssl.trust">${email.host}</prop>
+				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
 			</props>
 		</property>
 	</bean>
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/"></property>
-		<property name="suffix" value=".jsp"></property>
+		<property name="prefix" value="${view.page.prefix}"></property>
+		<property name="suffix" value="${view.page.suffix}"></property>
 	</bean>
 
 	<bean id="passwordEncoder"
@@ -51,4 +46,5 @@
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</bean>
+
 </beans>
