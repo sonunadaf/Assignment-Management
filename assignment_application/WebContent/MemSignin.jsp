@@ -19,8 +19,8 @@
 				<div class="col-md-3"></div>
 
 				<div class="col-md-5 mb-3">
-					<label for="userName">User Name</label> <input type="text"
-						class="form-control" id="userName" name="user"
+					<label for="user">User Name</label> <input type="text"
+						class="form-control" id="user" name="user"
 						placeholder="User Name">
 					<div id="emailvalid" style="color: red;"></div>
 				</div>

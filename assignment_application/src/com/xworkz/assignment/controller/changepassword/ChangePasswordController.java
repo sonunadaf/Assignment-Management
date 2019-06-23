@@ -39,7 +39,7 @@ public class ChangePasswordController {
 			throws ControllerException {
 		HttpSession session = request.getSession(false);
 		try {
-			if (session.getAttribute(ViewMessageConstant.SESSION_USER) != null) {
+			if (session != null && session.getAttribute(ViewMessageConstant.SESSION_USER) != null) {
 				AdminEntity admin = (AdminEntity) session.getAttribute(ViewMessageConstant.SESSION_USER);
 				boolean result = changePasswordService.changePassword(changePasswordDTO);
 				if (result) {

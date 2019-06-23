@@ -44,6 +44,8 @@ public class AdminEntity implements Serializable {
 	private String lastLogin;
 	@Column(name = "FAIL_SIGN_IN")
 	private Integer failLogin;
+	@Column(name = "isOwner")
+	private boolean isOwner;
 
 	public AdminEntity() {
 		System.out.println("created : " + this.getClass().getSimpleName());
@@ -137,11 +139,24 @@ public class AdminEntity implements Serializable {
 		this.failLogin = failLogin;
 	}
 
+	public boolean isOwner() {
+		return isOwner;
+	}
+
+	public void setOwner(boolean isOwner) {
+		this.isOwner = isOwner;
+	}
+
+	public void setFailLogin(Integer failLogin) {
+		this.failLogin = failLogin;
+	}
+
 	@Override
 	public String toString() {
 		return "AdminEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId
 				+ ", countryName=" + countryName + ", contactNumber=" + contactNumber + ", isFirstLogin=" + isFirstLogin
-				+ ", password=" + password + ", date=" + date + "]";
+				+ ", password=" + password + ", date=" + date + ", lastLogin=" + lastLogin + ", failLogin=" + failLogin
+				+ ", isOwner=" + isOwner + "]";
 	}
 
 }

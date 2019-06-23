@@ -22,8 +22,9 @@
 			</div>
 			<div class="col-md-6 float-right"></div>
 			<div class="col-md-2">
-				<br></br> <a href="#" class="btn btn-info float-right">
-					${admin.firstName} ${admin.lastName}</a>
+				<br></br>
+				<h4 style="color: white; text-align: right">${admin.firstName}
+					${admin.lastName}</h4>
 			</div>
 			<div class="col-md-1" style="color: white;">
 				<br></br>
@@ -84,7 +85,7 @@
 						value="Update"></input>
 				</div>
 				<div class="col-md-2">
-					<a class="btn btn-primary btn-lg btn-block" href="Index.jsp"
+					<a class="btn btn-primary btn-lg btn-block" href="logOut"
 						role="button">Cancel</a>
 				</div>
 			</div>

@@ -1,8 +1,10 @@
 package com.xworkz.assignment.constants;
 
 public interface ViewMessageConstant {
-	
-	public String SESSION_USER="admin";
+
+	public String SESSION_USER = "admin";
+	public String MAKE_MEMBER_USER = "adminFromDb";
+	public String SIGN_UP_URL = "http://localhost:8080/assignment_application/SignUp.jsp";
 
 	public String MOBILE_NO_LENGTH = "Mobile Number must be 10 digit";
 	public String EMAIL_EXIST_MSG = "Email already Exist";
@@ -13,7 +15,7 @@ public interface ViewMessageConstant {
 	public String WRONG_PASSWORD_3_TIMES = "You have have entered 3 time's wrong password,  please contact Assignment Mannagement Customer Care";
 	public String INCORRECT_PASSWORD = "incorrect user password";
 	public String INCORRECT_USER_NAME = "incorrect user name";
-
+	public String INCORRECT_ANY = "incorrect user name or pass";
 	public String MESSAGE = "message";
 	public String MEMBER_ERROR = "membererror";
 
@@ -35,5 +37,6 @@ public interface ViewMessageConstant {
 
 	public String FILE_URL = "G:/assignmentUploadfile/";
 	public String DATE_FORMAT = "yyyy.mm.dd.HH.MM.SS";
-
+	public String MEMBER_ADDED_SUCCESS = "Member Added Successfull";
+	public String MEMBER_EXIST = "Member Already Exist";
 }

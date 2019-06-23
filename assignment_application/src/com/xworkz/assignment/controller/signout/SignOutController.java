@@ -29,9 +29,12 @@ public class SignOutController {
 
 		try {
 			HttpSession session = request.getSession(false);
-			if (session.getAttribute(ViewMessageConstant.SESSION_USER) != null) {
+			if (session != null && session.getAttribute(ViewMessageConstant.SESSION_USER) != null) {
 				session.invalidate();
 				return new ModelAndView(EnumViews.SignIn.toString());
+			} else if (session != null && session.getAttribute(ViewMessageConstant.MAKE_MEMBER_USER) != null) {
+				session.invalidate();
+				return new ModelAndView(EnumViews.MemSignin.toString());
 			}
 		} catch (Exception e) {
 			logger.error(

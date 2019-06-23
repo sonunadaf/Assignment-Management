@@ -30,7 +30,7 @@ public class AssignToStudent {
 					+ createAssignmentEntity.getAssignmentId() + EmailConstant.COURSE_NAME
 					+ createAssignmentEntity.getCourseName() + EmailConstant.TOPIC_NAME
 					+ createAssignmentEntity.getTopicName() + EmailConstant.DESCRIPTION
-					+ createAssignmentEntity.getTopicName() + EmailConstant.LAST_DATE
+					+ createAssignmentEntity.getDescription() + EmailConstant.LAST_DATE
 					+ createAssignmentEntity.getLastDate();
 			for (String emst : emailList) {
 				SimpleMailMessage mailMessage = new SimpleMailMessage();
