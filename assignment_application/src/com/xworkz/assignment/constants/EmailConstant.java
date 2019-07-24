@@ -22,4 +22,5 @@ public interface EmailConstant {
 
 	public String ASSIGNMENT_UPLOAD_SUCCESS = "Assignment Uploaded Successful \n Thank You.";
 	public String MEMBER_CONFIRMATION_MSG = "You are now member of our team.Please Signup. link is given below.\nurl : ";
+	public String MEMBER_LOGIN_STATUS="Member is Blocked Permanently";
 }
